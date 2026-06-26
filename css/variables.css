@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* Fonts */
+  --font-arabic: 'Cairo', sans-serif;
+  --font-english: 'Plus Jakarta Sans', sans-serif;
+
+  /* Common transitions & curves */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --border-radius-xs: 6px;
+  --border-radius-sm: 10px;
+  --border-radius-md: 16px;
+  --border-radius-lg: 24px;
+  --border-radius-full: 9999px;
+  
+  --shadow-sm: 0 2px 8px -2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 10px 20px -8px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 20px 40px -12px rgba(0, 0, 0, 0.12);
+  --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.15);
+}
+
+/* Light Theme Variables */
+:root, [data-theme="light"] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  --bg-glass: rgba(255, 255, 255, 0.7);
+  --border-color: #e2e8f0;
+  --border-color-glow: rgba(99, 102, 241, 0.2);
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --text-on-primary: #ffffff;
+
+  --primary: 250, 84%, 54%; /* Indigo 600 */
+  --primary-light: 250, 95%, 95%;
+  --primary-hover: 250, 84%, 45%;
+  
+  --success: 142, 76%, 36%; /* Emerald 600 */
+  --success-light: 142, 70%, 95%;
+  
+  --warning: 38, 92%, 50%; /* Amber 500 */
+  --warning-light: 38, 92%, 95%;
+
+  --danger: 347, 84%, 54%; /* Rose 600 */
+  --danger-light: 347, 84%, 95%;
+
+  --info: 200, 95%, 45%; /* Sky 600 */
+  --info-light: 200, 95%, 95%;
+
+  --sidebar-width: 280px;
+  --header-height: 70px;
+  
+  --scrollbar-thumb: #cbd5e1;
+  --scrollbar-track: #f1f5f9;
+}
+
+/* Dark Theme Variables */
+[data-theme="dark"] {
+  --bg-primary: #0b0f19;
+  --bg-secondary: #111827;
+  --bg-tertiary: #1f2937;
+  --bg-glass: rgba(17, 24, 39, 0.75);
+  --border-color: #374151;
+  --border-color-glow: rgba(129, 140, 248, 0.25);
+
+  --text-primary: #f9fafb;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  --text-on-primary: #ffffff;
+
+  --primary: 245, 80%, 64%; /* Indigo 500 */
+  --primary-light: 245, 80%, 15%;
+  --primary-hover: 245, 80%, 70%;
+
+  --success: 142, 70%, 45%; /* Emerald 500 */
+  --success-light: 142, 70%, 12%;
+
+  --warning: 38, 92%, 50%; /* Amber 500 */
+  --warning-light: 38, 92%, 12%;
+
+  --danger: 347, 84%, 60%; /* Rose 500 */
+  --danger-light: 347, 84%, 12%;
+
+  --info: 200, 95%, 55%; /* Sky 500 */
+  --info-light: 200, 95%, 12%;
+  
+  --scrollbar-thumb: #4b5563;
+  --scrollbar-track: #1f2937;
+
+  --shadow-sm: 0 2px 8px -2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 10px 20px -8px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 25px rgba(129, 140, 248, 0.15);
+}
