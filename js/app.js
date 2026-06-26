@@ -83,7 +83,15 @@ export function navigateToView(viewName) {
 
   // Handle customer screen opening in new window/tab
   if (viewName === 'customer-screen') {
-    const tSlug = (window.ActiveTenant && window.ActiveTenant.slug) ? window.ActiveTenant.slug : 'demo'; window.open('storefront.php?preview=woodmart&tenant=' + tSlug, '_blank');
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const tSlug = (window.ActiveTenant && window.ActiveTenant.slug) ? window.ActiveTenant.slug : 'demo';
+    if (isLocal) {
+      window.open('storefront.php?preview=woodmart&tenant=' + tSlug, '_blank');
+    } else {
+      const scheme = window.location.protocol + '//';
+      const domain = (window.ActiveTenant && window.ActiveTenant.custom_domain) ? window.ActiveTenant.custom_domain : (tSlug + '.matjer.net');
+      window.open(scheme + domain + '/?preview=woodmart', '_blank');
+    }
     return;
   }
 
@@ -437,14 +445,28 @@ function setupGlobalListeners() {
           .then(res => res.json())
           .then(data => {
             if (data.success) {
-              window.location.href = 'login.php';
+              let basePath = window.location.pathname;
+              if (basePath.endsWith('/admin') || basePath.endsWith('/admin/')) {
+                  basePath = basePath.replace(/\/admin\/?$/, '');
+              }
+              if (!basePath.endsWith('/')) {
+                  basePath += '/';
+              }
+              window.location.href = basePath + 'admin';
             } else {
               alert('فشل تسجيل الخروج، يرجى المحاولة مرة أخرى.');
             }
           })
           .catch(err => {
             console.error('Logout error:', err);
-            window.location.href = 'login.php';
+            let basePath = window.location.pathname;
+            if (basePath.endsWith('/admin') || basePath.endsWith('/admin/')) {
+                basePath = basePath.replace(/\/admin\/?$/, '');
+            }
+            if (!basePath.endsWith('/')) {
+                basePath += '/';
+            }
+            window.location.href = basePath + 'admin';
           });
       }
     });

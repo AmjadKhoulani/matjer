@@ -62,14 +62,28 @@ function initSaaSDashboard() {
           .then(res => res.json())
           .then(data => {
             if (data.success) {
-              window.location.href = 'login.php';
+              let basePath = window.location.pathname;
+              if (basePath.endsWith('/dashboard.php')) {
+                  basePath = basePath.replace(/\/dashboard\.php$/, '');
+              }
+              if (!basePath.endsWith('/')) {
+                  basePath += '/';
+              }
+              window.location.href = basePath + 'admin';
             } else {
               alert('فشل تسجيل الخروج، يرجى المحاولة مرة أخرى.');
             }
           })
           .catch(err => {
             console.error('Logout error:', err);
-            window.location.href = 'login.php';
+            let basePath = window.location.pathname;
+            if (basePath.endsWith('/dashboard.php')) {
+                basePath = basePath.replace(/\/dashboard\.php$/, '');
+            }
+            if (!basePath.endsWith('/')) {
+                basePath += '/';
+            }
+            window.location.href = basePath + 'admin';
           });
       }
     });

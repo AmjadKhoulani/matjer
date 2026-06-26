@@ -311,7 +311,14 @@ $tenant_slug = $tenant ? $tenant['slug'] : '';
             if (data.user.tenant_id === null) {
               window.location.href = 'dashboard.php'; // Superadmin to saas dashboard
             } else {
-              window.location.href = 'admin';
+              let basePath = window.location.pathname;
+              if (basePath.endsWith('/admin') || basePath.endsWith('/admin/')) {
+                  basePath = basePath.replace(/\/admin\/?$/, '');
+              }
+              if (!basePath.endsWith('/')) {
+                  basePath += '/';
+              }
+              window.location.href = basePath + 'admin';
             }
           }
         })
@@ -349,7 +356,14 @@ $tenant_slug = $tenant ? $tenant['slug'] : '';
             window.location.href = 'dashboard.php';
           } else {
             // Redirect to merchant manager
-            window.location.href = 'admin';
+            let basePath = window.location.pathname;
+            if (basePath.endsWith('/admin') || basePath.endsWith('/admin/')) {
+                basePath = basePath.replace(/\/admin\/?$/, '');
+            }
+            if (!basePath.endsWith('/')) {
+                basePath += '/';
+            }
+            window.location.href = basePath + 'admin';
           }
         } else {
           throw new Error(data.message || 'خطأ غير معروف في السيرفر.');

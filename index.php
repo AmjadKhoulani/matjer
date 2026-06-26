@@ -1,3 +1,29 @@
+<?php
+require_once __DIR__ . '/api/config.php';
+
+// Only load storefront if the host is a tenant subdomain/custom domain OR if a tenant is explicitly requested via query parameter
+$is_tenant_context = false;
+if (isset($_GET['tenant'])) {
+    $is_tenant_context = true;
+} else if (isset($_SERVER['HTTP_HOST'])) {
+    $host = strtolower(trim($_SERVER['HTTP_HOST']));
+    $host = explode(':', $host)[0];
+    if (strpos($host, 'www.') === 0) $host = substr($host, 4);
+    
+    $exclude_domains = ['matjer.net', 'www.matjer.net', 'localhost', '127.0.0.1'];
+    if (!in_array($host, $exclude_domains)) {
+        $is_tenant_context = true;
+    }
+}
+
+if ($is_tenant_context) {
+    $tenant_id = get_active_tenant_id();
+    if ($tenant_id !== null) {
+        include __DIR__ . '/storefront.php';
+        exit;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" data-theme="light">
 <head>
@@ -437,7 +463,11 @@
       .then(async res => {
         const data = await res.json();
         if (res.ok && data.success) {
-          // Success render
+          const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+          const storeUrl = isLocal 
+            ? `admin?tenant=${payload.slug}` 
+            : `${window.location.protocol}//${payload.slug}.matjer.net/admin`;
+
           document.querySelector('.register-modal').innerHTML = `
             <div style="text-align:center; padding:20px;">
               <div style="width:64px; height:64px; border-radius:50%; background:#10b981; color:white; display:inline-flex; align-items:center; justify-content:center; font-size:32px; margin-bottom:16px;">
@@ -447,7 +477,7 @@
               <p style="color:var(--text-secondary); font-size:14px; line-height:1.6; margin-bottom:24px;">
                 تم تجهيز متجرك <strong>${payload.name}</strong> بنجاح. يمكنك الآن الانتقال لتسجيل الدخول بلوحة التحكم الخاصة بك.
               </p>
-              <a href="login.php?tenant=${payload.slug}" class="btn btn-primary" style="display:inline-block; padding:12px 30px; font-weight:700;">دخول لوحة التحكم</a>
+              <a href="${storeUrl}" class="btn btn-primary" style="display:inline-block; padding:12px 30px; font-weight:700;">دخول لوحة التحكم</a>
             </div>
           `;
         } else {

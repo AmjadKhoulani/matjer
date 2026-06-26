@@ -45,12 +45,7 @@ try {
 function get_active_tenant_id() {
     global $pdo;
     
-    // 1. Check session
-    if (isset($_SESSION['tenant_id'])) {
-        return $_SESSION['tenant_id'];
-    }
-    
-    // 2. Check query param or post param or headers (highest priority manual overrides)
+    // 1. Check query param or post param or headers (highest priority manual overrides)
     $tenant_slug = '';
     if (isset($_GET['tenant'])) {
         $tenant_slug = trim($_GET['tenant']);
@@ -80,7 +75,7 @@ function get_active_tenant_id() {
         }
     }
     
-    // 3. Resolve by Domain or Subdomain
+    // 2. Resolve by Domain or Subdomain
     if (isset($_SERVER['HTTP_HOST'])) {
         $host = strtolower(trim($_SERVER['HTTP_HOST']));
         $host = explode(':', $host)[0]; // strip port if any
@@ -88,7 +83,7 @@ function get_active_tenant_id() {
             $host = substr($host, 4);
         }
         
-        $exclude_domains = ['matjer.net', 'localhost', '127.0.0.1'];
+        $exclude_domains = ['matjer.net', 'www.matjer.net', 'localhost', '127.0.0.1'];
         if (!in_array($host, $exclude_domains)) {
             try {
                 // A. Check if it's a subdomain of matjer.net (e.g. *.matjer.net)
@@ -119,6 +114,11 @@ function get_active_tenant_id() {
         }
     }
     
+    // 3. Check session (only if not overridden by explicit query/domain)
+    if (isset($_SESSION['tenant_id'])) {
+        return $_SESSION['tenant_id'];
+    }
+    
     // 4. Check if user is logged in, and retrieve their tenant_id
     if (isset($_SESSION['user_id'])) {
         try {
@@ -139,7 +139,7 @@ function get_active_tenant_id() {
         $host = strtolower(trim($_SERVER['HTTP_HOST']));
         $host = explode(':', $host)[0];
         if (strpos($host, 'www.') === 0) $host = substr($host, 4);
-        if ($host === 'matjer.net') {
+        if ($host === 'matjer.net' || $host === 'www.matjer.net') {
             return null; // Root domain does not fall back to a random tenant
         }
     }

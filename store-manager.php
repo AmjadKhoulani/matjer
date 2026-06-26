@@ -1,16 +1,31 @@
 <?php
 require_once __DIR__ . '/api/config.php';
 
+$active_tenant_id = get_active_tenant_id();
+$is_local = (isset($_SERVER['HTTP_HOST']) && (in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1']) || strpos($_SERVER['HTTP_HOST'], 'localhost:') === 0));
+
 // Enforce authentication
-if (!isset($_SESSION['user_id'])) {
-    $tenant_slug = isset($_GET['tenant']) ? trim($_GET['tenant']) : '';
-    header("Location: login.php?tenant=" . urlencode($tenant_slug));
+$is_authenticated = isset($_SESSION['user_id']);
+if ($is_authenticated) {
+    // If the logged in user's tenant_id does not match the active tenant, they are not authenticated for this tenant
+    // (Note: Super Admin $_SESSION['tenant_id'] is null and will redirect to dashboard.php)
+    if ($_SESSION['tenant_id'] !== null && $_SESSION['tenant_id'] !== $active_tenant_id) {
+        $is_authenticated = false;
+    }
+}
+
+if (!$is_authenticated) {
+    include __DIR__ . '/login.php';
     exit;
 }
 
 // Redirect super admin to SaaS dashboard
 if ($_SESSION['tenant_id'] === null) {
-    header("Location: dashboard.php");
+    if ($is_local) {
+        header("Location: dashboard.php");
+    } else {
+        header("Location: http://matjer.net/dashboard.php");
+    }
     exit;
 }
 
@@ -19,6 +34,17 @@ $tenant = get_active_tenant_details();
 $store_name = $tenant ? $tenant['name'] : 'المتجر النموذجي';
 $tenant_slug = $tenant ? $tenant['slug'] : '';
 $theme_color = $tenant ? $tenant['theme_color'] : '#4f46e5';
+
+$scheme = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https://" : "http://";
+if ($is_local) {
+    $storefront_url = "storefront.php?tenant=" . urlencode($tenant_slug);
+} else {
+    if ($tenant && !empty($tenant['custom_domain'])) {
+        $storefront_url = $scheme . $tenant['custom_domain'] . "/";
+    } else {
+        $storefront_url = $scheme . $tenant_slug . ".matjer.net/";
+    }
+}
 
 // Helper to convert hex to HSL for CSS variables
 function hexToHsl($hex) {
@@ -2543,7 +2569,7 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
                   <h3 style="font-weight:800; color:var(--text-primary); font-size:18px;"><i class="fas fa-palette" style="color:hsla(var(--primary),1); margin-inline-end:8px;"></i> مكتبة قوالب وثيمات المتاجر الفرونت اند</h3>
                   <p style="font-size:12px; color:var(--text-muted); margin-top:4px;">اختر مظهر متجرك الإلكتروني الموجه للعملاء (Storefront) وقم بتهيئة طابعه البصري</p>
                 </div>
-                <a href="storefront.html" target="_blank" class="btn btn-primary" style="display:flex; align-items:center; gap:8px;"><i class="fas fa-external-link-alt"></i> معاينة واجهة المتجر (Frontend)</a>
+                <a href="<?php echo htmlspecialchars($storefront_url); ?>" target="_blank" class="btn btn-primary" style="display:flex; align-items:center; gap:8px;"><i class="fas fa-external-link-alt"></i> معاينة واجهة المتجر (Frontend)</a>
               </div>
 
               <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap:20px; margin-top:10px;">
@@ -2572,7 +2598,7 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
                     
                     <div style="display:flex; gap:10px; border-top:1px solid var(--border-color); padding-top:12px; align-items:center;">
                       <button class="btn btn-primary btn-sm" id="btn-activate-jasmine" style="flex:2;"><i class="fas fa-check"></i> تم التفعيل كافتراضي</button>
-                      <a href="storefront.html?preview=jasmine" target="_blank" class="btn btn-secondary btn-sm" style="flex:1.2; display:flex; align-items:center; justify-content:center; gap:6px; text-decoration:none; height:36px; padding:0 8px; font-size:12px; font-weight:600;"><i class="fas fa-eye"></i> معاينة</a>
+                      <a href="<?php echo htmlspecialchars($storefront_url . ($is_local ? '&' : '?') . 'preview=jasmine'); ?>" target="_blank" class="btn btn-secondary btn-sm" style="flex:1.2; display:flex; align-items:center; justify-content:center; gap:6px; text-decoration:none; height:36px; padding:0 8px; font-size:12px; font-weight:600;"><i class="fas fa-eye"></i> معاينة</a>
                       <button class="btn btn-secondary btn-sm btn-icon" title="خصائص المظهر والتخصيص"><i class="fas fa-cog"></i></button>
                     </div>
                   </div>
@@ -2603,7 +2629,7 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
                     
                     <div style="display:flex; gap:10px; border-top:1px solid var(--border-color); padding-top:12px; align-items:center;">
                       <button class="btn btn-primary btn-sm" id="btn-activate-ella" style="flex:2;"><i class="fas fa-toggle-on"></i> تفعيل كافتراضي للمتجر</button>
-                      <a href="storefront.html?preview=ella" target="_blank" class="btn btn-secondary btn-sm" style="flex:1.2; display:flex; align-items:center; justify-content:center; gap:6px; text-decoration:none; height:36px; padding:0 8px; font-size:12px; font-weight:600;"><i class="fas fa-eye"></i> معاينة</a>
+                      <a href="<?php echo htmlspecialchars($storefront_url . ($is_local ? '&' : '?') . 'preview=ella'); ?>" target="_blank" class="btn btn-secondary btn-sm" style="flex:1.2; display:flex; align-items:center; justify-content:center; gap:6px; text-decoration:none; height:36px; padding:0 8px; font-size:12px; font-weight:600;"><i class="fas fa-eye"></i> معاينة</a>
                       <button class="btn btn-secondary btn-sm btn-icon" title="خصائص المظهر والتخصيص"><i class="fas fa-cog"></i></button>
                     </div>
                   </div>
@@ -2634,7 +2660,7 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
                     
                     <div style="display:flex; gap:10px; border-top:1px solid var(--border-color); padding-top:12px; align-items:center;">
                       <button class="btn btn-primary btn-sm" id="btn-activate-woodmart" style="flex:2;"><i class="fas fa-toggle-on"></i> تفعيل كافتراضي للمتجر</button>
-                      <a href="storefront.html?preview=woodmart" target="_blank" class="btn btn-secondary btn-sm" style="flex:1.2; display:flex; align-items:center; justify-content:center; gap:6px; text-decoration:none; height:36px; padding:0 8px; font-size:12px; font-weight:600;"><i class="fas fa-eye"></i> معاينة</a>
+                      <a href="<?php echo htmlspecialchars($storefront_url . ($is_local ? '&' : '?') . 'preview=woodmart'); ?>" target="_blank" class="btn btn-secondary btn-sm" style="flex:1.2; display:flex; align-items:center; justify-content:center; gap:6px; text-decoration:none; height:36px; padding:0 8px; font-size:12px; font-weight:600;"><i class="fas fa-eye"></i> معاينة</a>
                       <button class="btn btn-secondary btn-sm btn-icon" title="خصائص المظهر والتخصيص"><i class="fas fa-cog"></i></button>
                     </div>
                   </div>
