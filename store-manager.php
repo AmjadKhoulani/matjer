@@ -163,9 +163,9 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
   </script>
   
   <!-- CSS Stylesheets -->
-  <link rel="stylesheet" href="css/variables.css?v=3.0">
-  <link rel="stylesheet" href="css/style.css?v=3.0">
-  <link rel="stylesheet" href="css/components.css?v=3.0">
+  <link rel="stylesheet" href="css/variables.css?v=3.2">
+  <link rel="stylesheet" href="css/style.css?v=3.2">
+  <link rel="stylesheet" href="css/components.css?v=3.2">
   
   <!-- FontAwesome Icons for modern dashboard elements -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -576,7 +576,7 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
             <span class="user-role">الوصول الكامل</span>
           </div>
         </div>
-        <button class="header-action-btn btn-logout-action" title="تسجيل الخروج" style="color: hsla(var(--danger), 1); width: 32px; height: 32px; border-radius: var(--border-radius-full); display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer;">
+        <button type="button" class="header-action-btn btn-logout-action" title="تسجيل الخروج" style="color: hsla(var(--danger), 1); width: 32px; height: 32px; border-radius: var(--border-radius-full); display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer;">
           <i class="fas fa-sign-out-alt"></i>
         </button>
       </div>
@@ -3595,6 +3595,6 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
   </div>
 
   <!-- Core JavaScript Module -->
-  <script type="module" src="js/app.js"></script>
+  <script type="module" src="js/app.js?v=3.2"></script>
 </body>
 </html>

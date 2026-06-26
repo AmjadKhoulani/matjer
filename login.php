@@ -31,7 +31,7 @@ $tenant_slug = $tenant ? $tenant['slug'] : '';
   <base href="<?php echo htmlspecialchars($base_href); ?>">
   
   <!-- CSS Stylesheets -->
-  <link rel="stylesheet" href="css/variables.css?v=3.0">
+  <link rel="stylesheet" href="css/variables.css?v=3.2">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>

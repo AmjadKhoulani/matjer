@@ -30,9 +30,9 @@ $store_admin_url = $demo_tenant && !empty($demo_tenant['custom_domain']) ? '//' 
   <title>لوحة تحكم المنصة | منصة متجر SaaS</title>
   
   <!-- CSS Stylesheets -->
-  <link rel="stylesheet" href="css/variables.css?v=3.0">
-  <link rel="stylesheet" href="css/style.css?v=3.0">
-  <link rel="stylesheet" href="css/components.css?v=3.0">
+  <link rel="stylesheet" href="css/variables.css?v=3.2">
+  <link rel="stylesheet" href="css/style.css?v=3.2">
+  <link rel="stylesheet" href="css/components.css?v=3.2">
   
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -66,7 +66,7 @@ $store_admin_url = $demo_tenant && !empty($demo_tenant['custom_domain']) ? '//' 
             <span class="user-role" id="sidebar-user-role">الوصول الكامل</span>
           </div>
         </div>
-        <button class="header-action-btn btn-logout-action" title="تسجيل الخروج" style="color: hsla(var(--danger), 1); width: 32px; height: 32px; border-radius: var(--border-radius-full); display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer;">
+        <button type="button" class="header-action-btn btn-logout-action" title="تسجيل الخروج" style="color: hsla(var(--danger), 1); width: 32px; height: 32px; border-radius: var(--border-radius-full); display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer;">
           <i class="fas fa-sign-out-alt"></i>
         </button>
       </div>
@@ -406,6 +406,6 @@ $store_admin_url = $demo_tenant && !empty($demo_tenant['custom_domain']) ? '//' 
   </div>
 
   <!-- Core JavaScript Module -->
-  <script type="module" src="js/saas-dashboard.js"></script>
+  <script type="module" src="js/saas-dashboard.js?v=3.2"></script>
 </body>
 </html>
