@@ -118,7 +118,7 @@ if ($is_tenant_context) {
       <button class="header-action-btn theme-toggle-btn" id="btn-theme-toggle" title="تبديل المظهر">
         <i class="fas fa-moon"></i>
       </button>
-      <a href="login.php" class="btn btn-secondary btn-sm">تسجيل الدخول</a>
+      <a href="admin" class="btn btn-secondary btn-sm">تسجيل الدخول</a>
       <a href="dashboard.php" class="btn btn-primary btn-sm">لوحة المنصة</a>
     </div>
   </nav>

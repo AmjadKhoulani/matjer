@@ -33,7 +33,7 @@
       <button class="header-action-btn theme-toggle-btn" id="btn-theme-toggle" title="تبديل المظهر">
         <i class="fas fa-moon"></i>
       </button>
-      <a href="login.php" class="btn btn-primary btn-sm">تسجيل الدخول</a>
+      <a href="admin" class="btn btn-primary btn-sm">تسجيل الدخول</a>
     </div>
   </nav>
 
