@@ -530,14 +530,17 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
         </li>
       </ul>
       
-      <div class="sidebar-footer">
-        <div class="user-profile-summary">
+      <div class="sidebar-footer" style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+        <div class="user-profile-summary" style="flex-grow: 1;">
           <div class="user-avatar">مد</div>
           <div class="user-info">
             <span class="user-name">مدير النظام</span>
             <span class="user-role">الوصول الكامل</span>
           </div>
         </div>
+        <button class="header-action-btn btn-logout-action" title="تسجيل الخروج" style="color: hsla(var(--danger), 1); width: 32px; height: 32px; border-radius: var(--border-radius-full); display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer;">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
       </div>
     </aside>
     

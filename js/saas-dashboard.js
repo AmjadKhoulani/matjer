@@ -52,6 +52,28 @@ function initSaaSDashboard() {
   });
 
   switchPerspective(activePerspective);
+
+  // Logout action click
+  document.querySelectorAll('.btn-logout-action').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (confirm('هل أنت متأكد من رغبتك في تسجيل الخروج؟')) {
+        fetch('api/auth.php?action=logout')
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              window.location.href = 'login.php';
+            } else {
+              alert('فشل تسجيل الخروج، يرجى المحاولة مرة أخرى.');
+            }
+          })
+          .catch(err => {
+            console.error('Logout error:', err);
+            window.location.href = 'login.php';
+          });
+      }
+    });
+  });
 }
 
 function initTheme() {

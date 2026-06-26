@@ -51,14 +51,17 @@ if ($_SESSION['tenant_id'] !== null) {
         <!-- Managed dynamically in JS -->
       </ul>
       
-      <div class="sidebar-footer">
-        <div class="user-profile-summary">
+      <div class="sidebar-footer" style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+        <div class="user-profile-summary" style="flex-grow: 1;">
           <div class="user-avatar" id="sidebar-user-avatar">SA</div>
           <div class="user-info">
             <span class="user-name" id="sidebar-user-name">سوبر أدمن</span>
             <span class="user-role" id="sidebar-user-role">الوصول الكامل</span>
           </div>
         </div>
+        <button class="header-action-btn btn-logout-action" title="تسجيل الخروج" style="color: hsla(var(--danger), 1); width: 32px; height: 32px; border-radius: var(--border-radius-full); display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer;">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
       </div>
     </aside>
     

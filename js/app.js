@@ -426,9 +426,30 @@ function setupGlobalListeners() {
           !toggleBtn.contains(e.target)) {
         sidebar.classList.remove('mobile-open');
       }
-    }
   });
   
+  // Logout action click
+  document.querySelectorAll('.btn-logout-action').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (confirm('هل أنت متأكد من رغبتك في تسجيل الخروج؟')) {
+        fetch('api/auth.php?action=logout')
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              window.location.href = 'login.php';
+            } else {
+              alert('فشل تسجيل الخروج، يرجى المحاولة مرة أخرى.');
+            }
+          })
+          .catch(err => {
+            console.error('Logout error:', err);
+            window.location.href = 'login.php';
+          });
+      }
+    });
+  });
+
   // Connect Global search in top-bar to current active views
   document.getElementById('global-search-input').addEventListener('input', (e) => {
     const searchVal = e.target.value.toLowerCase();
