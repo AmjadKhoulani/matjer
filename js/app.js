@@ -434,6 +434,7 @@ function setupGlobalListeners() {
           !toggleBtn.contains(e.target)) {
         sidebar.classList.remove('mobile-open');
       }
+    }
   });
   
   // Logout action click
