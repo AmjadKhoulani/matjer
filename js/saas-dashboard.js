@@ -5,7 +5,7 @@ let activeSaaSTab = 'overview'; // Default tab
 
 // Seeding Fallback
 const INITIAL_STORES = [
-  { id: '1', name: 'متجر نوفا الرئيسي', owner: 'عبد العزيز الحربي', plan: 'Pro', registeredDate: '2026-04-18', bill: 79, status: 'Active', slug: 'nova-store' },
+  { id: '1', name: 'المتجر النموذجي', owner: 'عبد العزيز الحربي', plan: 'Pro', registeredDate: '2026-04-18', bill: 79, status: 'Active', slug: 'demo' },
   { id: '2', name: 'بقالة النخبة الغذائية', owner: 'محمد عبد الله الشمراني', plan: 'Starter', registeredDate: '2026-05-10', bill: 29, status: 'Active', slug: 'al-nokhbah' }
 ];
 
@@ -112,8 +112,8 @@ async function switchPerspective(type) {
     setupSuperAdminSearch();
 
   } else {
-    sidebarUserAvatar.innerText = 'نوفا';
-    sidebarUserName.innerText = 'متجر نوفا الرئيسي';
+    sidebarUserAvatar.innerText = 'متجر';
+    sidebarUserName.innerText = 'المتجر النموذجي';
     sidebarUserRole.innerText = 'باقة احترافية (Pro)';
 
     superAdminView.style.display = 'none';
@@ -166,7 +166,7 @@ function renderMerchantSidebar() {
       </a>
     </li>
     <li class="menu-item">
-      <a href="store-manager.php?tenant=nova-store" class="menu-link" style="color: hsla(var(--primary), 1); font-weight: 700;">
+      <a href="store-manager.php?tenant=demo" class="menu-link" style="color: hsla(var(--primary), 1); font-weight: 700;">
         <i class="fas fa-external-link-alt"></i>
         <span>تشغيل مستودع المتجر</span>
       </a>

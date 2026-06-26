@@ -218,7 +218,7 @@ function handleStatusUpdateSubmit(e) {
 const MOCK_CUSTOMERS = [
   { name: 'عبد الله السالم', phone: '+966 50 111 2222', email: 'a.salem@gmail.com', ordersCount: 5, loyaltyPoints: 240 },
   { name: 'سارة الهلال', phone: '+966 55 222 3333', email: 'sara.h@outlook.com', ordersCount: 2, loyaltyPoints: 80 },
-  { name: 'خالد الحربي', phone: '+966 56 333 4444', email: 'k.harbi@novastore.sa', ordersCount: 1, loyaltyPoints: 30 },
+  { name: 'خالد الحربي', phone: '+966 56 333 4444', email: 'k.harbi@matjer.net', ordersCount: 1, loyaltyPoints: 30 },
   { name: 'مريم العتيبي', phone: '+966 54 444 5555', email: 'm.otb@gmail.com', ordersCount: 4, loyaltyPoints: 180 }
 ];
 
@@ -256,7 +256,7 @@ function initIntegration() {
   if (!form) return;
   
   // Load saved credentials
-  const url = localStorage.getItem('ns_woo_url') || 'https://store.novastore.sa';
+  const url = localStorage.getItem('ns_woo_url') || 'https://store.matjer.net';
   const ck = localStorage.getItem('ns_woo_ck') || 'ck_8a09f8e7b6c5d4e3f2a1';
   const cs = localStorage.getItem('ns_woo_cs') || 'cs_1a2b3c4d5e6f7g8h9i0j';
   const sync = localStorage.getItem('ns_woo_sync') || 'live';

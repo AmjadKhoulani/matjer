@@ -6,7 +6,7 @@ require_once __DIR__ . '/api/config.php';
 $tenant_id = get_active_tenant_id();
 $tenant = get_active_tenant_details();
 
-$store_name = $tenant ? $tenant['name'] : 'نوفـا ستـور';
+$store_name = $tenant ? $tenant['name'] : 'متجر';
 $theme_color = $tenant ? $tenant['theme_color'] : '#4f46e5';
 $logo_url = ($tenant && !empty($tenant['logo_url'])) ? $tenant['logo_url'] : '';
 $tenant_slug = $tenant ? $tenant['slug'] : '';
@@ -290,7 +290,7 @@ $tenant_slug = $tenant ? $tenant['slug'] : '';
       </form>
       
       <div class="support-footer" style="display:flex; justify-content:space-between; align-items:center; margin-top:30px;">
-        <span>منصة نوفا ستور السحابية</span>
+        <span>منصة متجر السحابية</span>
         <a href="index.php" style="color:<?php echo $theme_color; ?>; text-decoration:none;">الرئيسية</a>
       </div>
     </div>

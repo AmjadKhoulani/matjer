@@ -20,7 +20,7 @@ if ($_SESSION['tenant_id'] !== null) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>لوحة تحكم المنصة | نوفا ستور SaaS</title>
+  <title>لوحة تحكم المنصة | منصة متجر SaaS</title>
   
   <!-- CSS Stylesheets -->
   <link rel="stylesheet" href="css/variables.css?v=3.0">
@@ -41,8 +41,8 @@ if ($_SESSION['tenant_id'] !== null) {
     <aside class="sidebar">
       <div class="sidebar-header">
         <a href="index.php" class="logo-container">
-          <div class="logo-icon">N</div>
-          <span class="logo-text">نوفا ستور</span>
+          <div class="logo-icon">M</div>
+          <span class="logo-text">متجر</span>
         </a>
       </div>
       
@@ -83,7 +83,7 @@ if ($_SESSION['tenant_id'] !== null) {
             <span style="font-size: 11px; font-weight: 700; color: var(--text-secondary);">منظور العرض:</span>
             <select id="perspective-selector" class="filter-select" style="padding: 4px 8px; font-size: 12px; border: none; background: transparent; font-weight: 700; color: hsla(var(--primary), 1); cursor: pointer; outline: none;">
               <option value="super-admin">سوبر أدمن (لوحة المنصة)</option>
-              <option value="merchant">حساب التاجر (متجر نوفا الرئيسي)</option>
+              <option value="merchant">حساب التاجر (متجرك الرئيسي)</option>
             </select>
           </div>
 
@@ -218,18 +218,18 @@ if ($_SESSION['tenant_id'] !== null) {
           <div id="super-admin-settings" class="saas-section">
             <div class="dashboard-card" style="max-width: 600px; margin: 0 auto;">
               <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-sliders-h"></i> إعدادات منصة نوفا ستور SaaS</h3>
+                <h3 class="card-title"><i class="fas fa-sliders-h"></i> إعدادات منصة متجر SaaS</h3>
               </div>
               <div class="card-body">
                 <form id="saas-general-settings-form">
                   <div class="form-group">
                     <label class="form-label">اسم المنصة</label>
-                    <input type="text" class="form-control" value="نوفا ستور للحلول السحابية" required>
+                    <input type="text" class="form-control" value="منصة متجر للحلول السحابية" required>
                   </div>
                   <div class="form-row">
                     <div class="form-group">
                       <label class="form-label">البريد الإلكتروني للإدارة</label>
-                      <input type="email" class="form-control" value="admin@novastore.sa" required>
+                      <input type="email" class="form-control" value="admin@matjer.net" required>
                     </div>
                     <div class="form-group">
                       <label class="form-label">نسبة ضريبة المبيعات الافتراضية (%)</label>
@@ -261,7 +261,7 @@ if ($_SESSION['tenant_id'] !== null) {
             <div class="alert-banner" style="background-color: hsla(var(--success), 0.1); border-color: hsla(var(--success), 0.3);">
               <div class="alert-message">
                 <i class="fas fa-check-circle" style="color: hsla(var(--success), 1);"></i>
-                <span>حساب متجر نوفا نشط بالكامل. الباقة الحالية: <strong>الباقة الاحترافية (Pro Tier)</strong>. التجديد القادم بعد 24 يوم.</span>
+                <span>حساب متجرك نشط بالكامل. الباقة الحالية: <strong>الباقة الاحترافية (Pro Tier)</strong>. التجديد القادم بعد 24 يوم.</span>
               </div>
             </div>
             
@@ -308,10 +308,10 @@ if ($_SESSION['tenant_id'] !== null) {
               <div class="card-body" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
                 <div style="display: flex; gap: 16px; align-items: center;">
                   <div style="width: 64px; height: 64px; border-radius: var(--border-radius-md); background: linear-gradient(135deg, hsla(var(--primary), 1), hsla(var(--info), 1)); display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; font-weight: 800;">
-                    N
+                    M
                   </div>
                   <div>
-                    <h4 style="font-size: 18px; font-weight: 700;">متجر نوفا ستور الرئيسي</h4>
+                    <h4 style="font-size: 18px; font-weight: 700;">متجرك الرئيسي</h4>
                     <p style="font-size: 13px; color: var(--text-muted);">رابط متجرك: <a href="store-manager.php" target="_blank" style="color: hsla(var(--primary), 1); text-decoration: underline;">store-manager.php</a></p>
                   </div>
                 </div>

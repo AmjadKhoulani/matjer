@@ -1,8 +1,8 @@
 const INITIAL_EMPLOYEES = [
-  { id: '1', name: 'أحمد السديري', email: 'a.sudairy@novastore.sy', role: 'مدير المتجر', branch: 'مستودع دمشق الرئيسي', status: 'نشط' },
-  { id: '2', name: 'سلطان القحطاني', email: 's.qahtani@novastore.sy', role: 'أمين المستودع', branch: 'مستودع دمشق الرئيسي', status: 'نشط' },
-  { id: '3', name: 'مها الشمري', email: 'm.shammari@novastore.sy', role: 'كاشير مبيعات', branch: 'معرض حلب الفوري', status: 'نشط' },
-  { id: '4', name: 'رائد الهذلي', email: 'r.hothali@novastore.sy', role: 'مساعد كاشير', branch: 'معرض دمشق الفوري', status: 'إجازة' }
+  { id: '1', name: 'أحمد السديري', email: 'a.sudairy@matjer.net', role: 'مدير المتجر', branch: 'مستودع دمشق الرئيسي', status: 'نشط' },
+  { id: '2', name: 'سلطان القحطاني', email: 's.qahtani@matjer.net', role: 'أمين المستودع', branch: 'مستودع دمشق الرئيسي', status: 'نشط' },
+  { id: '3', name: 'مها الشمري', email: 'm.shammari@matjer.net', role: 'كاشير مبيعات', branch: 'معرض حلب الفوري', status: 'نشط' },
+  { id: '4', name: 'رائد الهذلي', email: 'r.hothali@matjer.net', role: 'مساعد كاشير', branch: 'معرض دمشق الفوري', status: 'إجازة' }
 ];
 
 const DEFAULT_ROLE_PERMISSIONS = {

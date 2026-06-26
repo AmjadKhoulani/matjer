@@ -83,7 +83,7 @@ export function navigateToView(viewName) {
 
   // Handle customer screen opening in new window/tab
   if (viewName === 'customer-screen') {
-    const tSlug = (window.ActiveTenant && window.ActiveTenant.slug) ? window.ActiveTenant.slug : 'nova-store'; window.open('storefront.php?preview=woodmart&tenant=' + tSlug, '_blank');
+    const tSlug = (window.ActiveTenant && window.ActiveTenant.slug) ? window.ActiveTenant.slug : 'demo'; window.open('storefront.php?preview=woodmart&tenant=' + tSlug, '_blank');
     return;
   }
 
@@ -153,7 +153,7 @@ export function navigateToView(viewName) {
     'team-audit': { title: 'سجل تدقيق الأمان والعمليات للفريق', subtitle: 'سجل زمني لعمليات الفريق ومتابعة التغييرات الأمنية على الفواتير والمخزون' },
     'settings-payment-shipping': { title: 'تهيئة بوابات الدفع وشركات الشحن', subtitle: 'تفعيل وتكوين وسائل السداد الإلكتروني ومزودي الخدمات البريدية واللوجستية' },
     'settings-themes': { title: 'مكتبة الثيمات وقوالب المتجر', subtitle: 'تهيئة وتخصيص ثيم الفرونت اند الموجه للعملاء وتفعيله كافتراضي' },
-    'apps-marketplace': { title: 'سوق تطبيقات نوفا ستور الملحقة', subtitle: 'تصفح وتثبيت تطبيقات وإضافات متجر Shopify و WooCommerce لتوسيع لوحة التحكم' },
+    'apps-marketplace': { title: 'سوق تطبيقات متجر الملحقة', subtitle: 'تصفح وتثبيت تطبيقات وإضافات متجر Shopify و WooCommerce لتوسيع لوحة التحكم' },
     'apps-installed': { title: 'التطبيقات المثبتة والنشطة', subtitle: 'إدارة وإعداد وحذف ملحقات متجرك الإلكتروني وتخصيص الربط' },
     'create-purchase': { title: 'سند مشتريات جديد', subtitle: 'تسجيل وإصدار فواتير شراء وتوريد بضائع جديدة للمستودع' },
     'all-purchases': { title: 'فواتير المشتريات (الموردين)', subtitle: 'متابعة كافة فواتير الشراء وسندات التوريد الصادرة للموردين' },

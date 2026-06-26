@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>المميزات | نوفا ستور</title>
+  <title>المميزات | متجر Matjer</title>
   
   <!-- CSS Stylesheets -->
   <link rel="stylesheet" href="css/variables.css?v=3.0">
@@ -19,8 +19,8 @@
   <!-- Header Navbar -->
   <nav class="landing-nav">
     <a href="index.php" class="logo-container">
-      <div class="logo-icon">N</div>
-      <span class="logo-text">نوفا ستور</span>
+      <div class="logo-icon">M</div>
+      <span class="logo-text">متجر</span>
     </a>
     
     <ul class="landing-nav-links">
@@ -115,18 +115,18 @@
   <!-- CTA section -->
   <section class="landing-features" style="background-color: var(--bg-secondary); border-bottom: none; text-align: center; padding: 60px 5%;">
     <h2 style="font-size: 28px; font-weight: 800; color: var(--text-primary); margin-bottom: 16px;">جاهز لإطلاق وتسهيل إدارة تجارتك؟</h2>
-    <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto 24px auto; font-size: 15px;">اشترك الآن بمتجر نوفا واحصل على 14 يوماً مجاناً لتجربة كافة المميزات وتنشيط كاشير مبيعاتك.</p>
+    <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto 24px auto; font-size: 15px;">اشترك الآن في منصة متجر واحصل على 14 يوماً مجاناً لتجربة كافة المميزات وتنشيط كاشير مبيعاتك.</p>
     <a href="dashboard.php" class="btn btn-primary" style="padding: 12px 28px;">ابدأ تجربتك المجانية الآن</a>
   </section>
 
   <!-- Footer Section -->
   <footer class="landing-footer">
     <a href="index.php" class="logo-container">
-      <div class="logo-icon">N</div>
-      <span class="logo-text">نوفا ستور</span>
+      <div class="logo-icon">M</div>
+      <span class="logo-text">متجر</span>
     </a>
-    <p style="font-size:14px; color:var(--text-secondary); max-width: 400px; line-height: 1.6;">منصة نوفا ستور السحابية لإدارة متجرك، مستودعاتك، مبيعاتك المباشرة، وحركة المخزون اللحظية بدقة متناهية.</p>
-    <div class="footer-copy">جميع الحقوق محفوظة &copy; 2026 منصة نوفا ستور.</div>
+    <p style="font-size:14px; color:var(--text-secondary); max-width: 400px; line-height: 1.6;">منصة متجر السحابية لإدارة متجرك، مستودعاتك، مبيعاتك المباشرة، وحركة المخزون اللحظية بدقة متناهية.</p>
+    <div class="footer-copy">جميع الحقوق محفوظة &copy; 2026 منصة متجر.</div>
   </footer>
 
   <!-- Script for Dark/Light Theme -->

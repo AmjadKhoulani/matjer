@@ -16,7 +16,7 @@ if ($_SESSION['tenant_id'] === null) {
 
 $tenant_id = $_SESSION['tenant_id'];
 $tenant = get_active_tenant_details();
-$store_name = $tenant ? $tenant['name'] : 'متجر نوفا الرئيسي';
+$store_name = $tenant ? $tenant['name'] : 'المتجر النموذجي';
 $tenant_slug = $tenant ? $tenant['slug'] : '';
 $theme_color = $tenant ? $tenant['theme_color'] : '#4f46e5';
 
@@ -1913,7 +1913,7 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
                 </div>
                 <div class="form-group" style="margin-bottom:0;">
                   <label class="form-label">البريد الإلكتروني</label>
-                  <input type="email" class="form-control" id="emp-email" required placeholder="مثال: employee@novastore.sa">
+                  <input type="email" class="form-control" id="emp-email" required placeholder="مثال: employee@matjer.net">
                 </div>
                 <div class="form-group" style="margin-bottom:0;">
                   <label class="form-label">الدور والمسؤولية في النظام</label>
@@ -2153,7 +2153,7 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
                 <div class="form-row">
                   <div class="form-group">
                     <label class="form-label">رابط متجر WooCommerce (URL)</label>
-                    <input type="text" class="form-control" id="integration-woo-url" value="https://store.novastore.sa" required>
+                    <input type="text" class="form-control" id="integration-woo-url" value="https://store.matjer.net" required>
                   </div>
                   <div class="form-group">
                     <label class="form-label">مفتاح المستهلك (Consumer Key)</label>
@@ -2414,7 +2414,7 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
                 <li>يجب أن يتضمن الصف الأول في ملف الـ Excel أسماء الأعمدة بدقة (SKU, Name, Price, Cost, Category).</li>
                 <li>يتم تجاهل الصفوف المكررة برمز الـ SKU للحد من الأخطاء وتجنب الكتابة فوق المنتجات دون إذن.</li>
                 <li>تأكد من تنسيق الأرقام كأعداد عشرية صحيحة في عمودي السعر والتكلفة وتفادي استخدام علامات العملات ($ أو ل.س).</li>
-                <li>يمكنك تحميل ملف نموذج جاهز لتعبئة البيانات ومطابقتها مع خوادم Nova Store.</li>
+                <li>يمكنك تحميل ملف نموذج جاهز لتعبئة البيانات ومطابقتها مع خوادم متجر.</li>
               </ul>
               <button class="btn btn-secondary btn-sm" style="margin-top: 20px; font-family: var(--font-arabic); display: flex; align-items: center; gap: 8px;">
                 <i class="fas fa-file-download"></i> تحميل قالب إكسيل النموذجي
@@ -2646,7 +2646,7 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
           <div class="settings-grid">
             <div class="settings-card" style="grid-column:1/-1; display:flex; flex-direction:column; gap:20px;">
               <div style="border-bottom:1px solid var(--border-color); padding-bottom:15px;">
-                <h3 style="font-weight:800; color:var(--text-primary); font-size:18px;"><i class="fas fa-cubes" style="color:hsla(var(--primary),1); margin-inline-end:8px;"></i> سوق ملحقات وتطبيقات نوفا (Apps Marketplace)</h3>
+                <h3 style="font-weight:800; color:var(--text-primary); font-size:18px;"><i class="fas fa-cubes" style="color:hsla(var(--primary),1); margin-inline-end:8px;"></i> سوق ملحقات وتطبيقات متجر (Apps Marketplace)</h3>
                 <p style="font-size:12px; color:var(--text-muted); margin-top:4px;">تصفح وثبت تطبيقات إضافية لربط المتاجر الإلكترونية وتوسيع وظائف نظام الـ ERP والمخازن</p>
               </div>
 
@@ -3220,7 +3220,7 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
         <div class="invoice-grid">
           <div class="invoice-header">
             <div>
-              <h2 style="font-size: 24px; font-weight: 800; color: hsla(var(--primary), 1);">نوفا ستور</h2>
+              <h2 style="font-size: 24px; font-weight: 800; color: hsla(var(--primary), 1);"><?php echo htmlspecialchars($store_name); ?></h2>
               <p style="font-size: 12px; color: var(--text-muted);" id="invoice-title-label">فاتورة مبيعات معتمدة</p>
             </div>
             <div style="text-align: left;">
@@ -3292,7 +3292,7 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
         <div class="invoice-grid">
           <div class="invoice-header">
             <div>
-              <h2 style="font-size: 24px; font-weight: 800; color: hsla(200, 95%, 45%, 1);">نوفا ستور</h2>
+              <h2 style="font-size: 24px; font-weight: 800; color: hsla(200, 95%, 45%, 1);"><?php echo htmlspecialchars($store_name); ?></h2>
               <p style="font-size: 12px; color: var(--text-muted);">عرض سعر معتمد رسمي للعميل</p>
             </div>
             <div style="text-align: left;">
@@ -3500,7 +3500,7 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
       <div class="modal-body" style="padding: 16px;">
         <div class="receipt-container">
           <div class="receipt-header">
-            <div class="receipt-store-title">نوفا ستور</div>
+            <div class="receipt-store-title"><?php echo htmlspecialchars($store_name); ?></div>
             <div style="font-size: 11px; color: var(--text-muted);">نظام نقاط بيع المستودعات المتكامل</div>
             <div style="font-size: 10px; color: var(--text-muted); margin-top: 4px;" id="receipt-date-label"></div>
           </div>

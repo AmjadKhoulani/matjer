@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نوفا ستور | منصة إدارة المتاجر والمستودعات السحابية</title>
+  <title>متجر Matjer | منصة إدارة المتاجر والمستودعات السحابية</title>
   
   <!-- CSS Stylesheets -->
   <link rel="stylesheet" href="css/variables.css?v=3.0">
@@ -78,8 +78,8 @@
   <!-- Header Navbar -->
   <nav class="landing-nav">
     <a href="index.php" class="logo-container">
-      <div class="logo-icon">N</div>
-      <span class="logo-text">نوفا ستور</span>
+      <div class="logo-icon">M</div>
+      <span class="logo-text">متجر</span>
     </a>
     
     <ul class="landing-nav-links">
@@ -114,7 +114,7 @@
         <div class="landing-mockup-dot red"></div>
         <div class="landing-mockup-dot yellow"></div>
         <div class="landing-mockup-dot green"></div>
-        <div style="flex-grow:1; text-align:center; font-size:10px; color:var(--text-muted); font-family:var(--font-english);">dashboard.novastore.saas</div>
+        <div style="flex-grow:1; text-align:center; font-size:10px; color:var(--text-muted); font-family:var(--font-english);">admin.matjer.net</div>
       </div>
       <div class="landing-mockup-body" style="background-color: var(--bg-primary); padding: 12px; display:flex; flex-direction:column; gap:12px; height: 380px; justify-content: flex-start; overflow: hidden;">
         <!-- Mockup layout of dashboard -->
@@ -290,11 +290,11 @@
   <!-- Footer Section -->
   <footer class="landing-footer" id="contact">
     <a href="index.php" class="logo-container">
-      <div class="logo-icon">N</div>
-      <span class="logo-text">نوفا ستور</span>
+      <div class="logo-icon">M</div>
+      <span class="logo-text">متجر</span>
     </a>
-    <p style="font-size:14px; color:var(--text-secondary); max-width: 400px; line-height: 1.6;">منصة نوفا ستور السحابية لإدارة متجرك، مستودعاتك، مبيعاتك المباشرة، وحركة المخزون اللحظية بدقة متناهية.</p>
-    <div class="footer-copy">جميع الحقوق محفوظة &copy; 2026 منصة نوفا ستور.</div>
+    <p style="font-size:14px; color:var(--text-secondary); max-width: 400px; line-height: 1.6;">منصة متجر السحابية لإدارة متجرك، مستودعاتك، مبيعاتك المباشرة، وحركة المخزون اللحظية بدقة متناهية.</p>
+    <div class="footer-copy">جميع الحقوق محفوظة &copy; 2026 منصة متجر.</div>
   </footer>
 
   <!-- Registration Modal Overlay -->
@@ -321,7 +321,7 @@
             <label class="form-label">رابط المتجر اللطيف (Slug)</label>
             <div style="display:flex; align-items:center; gap:8px;">
               <input type="text" class="form-control" id="reg-slug" placeholder="مثال: sham-fashion" style="direction:ltr; text-align:left;" required>
-              <span style="font-size:12px; font-weight:700; color:var(--text-muted);">.novastore.sa</span>
+              <span style="font-size:12px; font-weight:700; color:var(--text-muted);">.matjer.net</span>
             </div>
           </div>
           

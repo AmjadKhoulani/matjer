@@ -46,7 +46,7 @@ function get_active_tenant_id() {
         return $_SESSION['tenant_id'];
     }
     
-    // 2. Check query param or post param or headers
+    // 2. Check query param or post param or headers (highest priority manual overrides)
     $tenant_slug = '';
     if (isset($_GET['tenant'])) {
         $tenant_slug = trim($_GET['tenant']);
@@ -76,7 +76,46 @@ function get_active_tenant_id() {
         }
     }
     
-    // 3. Check if user is logged in, and retrieve their tenant_id
+    // 3. Resolve by Domain or Subdomain
+    if (isset($_SERVER['HTTP_HOST'])) {
+        $host = strtolower(trim($_SERVER['HTTP_HOST']));
+        $host = explode(':', $host)[0]; // strip port if any
+        if (strpos($host, 'www.') === 0) {
+            $host = substr($host, 4);
+        }
+        
+        $exclude_domains = ['matjer.net', 'localhost', '127.0.0.1'];
+        if (!in_array($host, $exclude_domains)) {
+            try {
+                // A. Check if it's a subdomain of matjer.net (e.g. *.matjer.net)
+                if (substr($host, -11) === '.matjer.net') {
+                    $subdomain = substr($host, 0, -11);
+                    if (!empty($subdomain) && $subdomain !== 'www' && $subdomain !== 'admin') {
+                        $stmt = $pdo->prepare("SELECT `id` FROM `ns_tenants` WHERE `slug` = ? AND `status` != 'Suspended'");
+                        $stmt->execute([$subdomain]);
+                        $id = $stmt->fetchColumn();
+                        if ($id) {
+                            $_SESSION['tenant_id'] = $id;
+                            return $id;
+                        }
+                    }
+                }
+                
+                // B. Check if it's a custom domain mapped to a tenant
+                $stmt = $pdo->prepare("SELECT `id` FROM `ns_tenants` WHERE `custom_domain` = ? AND `status` != 'Suspended'");
+                $stmt->execute([$host]);
+                $id = $stmt->fetchColumn();
+                if ($id) {
+                    $_SESSION['tenant_id'] = $id;
+                    return $id;
+                }
+            } catch (Exception $e) {
+                // Ignore DB errors
+            }
+        }
+    }
+    
+    // 4. Check if user is logged in, and retrieve their tenant_id
     if (isset($_SESSION['user_id'])) {
         try {
             $stmt = $pdo->prepare("SELECT `tenant_id` FROM `ns_users` WHERE `id` = ?");
@@ -91,7 +130,16 @@ function get_active_tenant_id() {
         }
     }
     
-    // 4. Fallback: Find the first active tenant in the database
+    // 5. Fallback: Find the first active tenant in the database (only if we are NOT on root domain)
+    if (isset($_SERVER['HTTP_HOST'])) {
+        $host = strtolower(trim($_SERVER['HTTP_HOST']));
+        $host = explode(':', $host)[0];
+        if (strpos($host, 'www.') === 0) $host = substr($host, 4);
+        if ($host === 'matjer.net') {
+            return null; // Root domain does not fall back to a random tenant
+        }
+    }
+    
     try {
         $id = $pdo->query("SELECT `id` FROM `ns_tenants` WHERE `status` != 'Suspended' ORDER BY `id` ASC LIMIT 1")->fetchColumn();
         if ($id) {

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>باقات الأسعار | نوفا ستور</title>
+  <title>باقات الأسعار | متجر Matjer</title>
   
   <!-- CSS Stylesheets -->
   <link rel="stylesheet" href="css/variables.css?v=3.0">
@@ -19,8 +19,8 @@
   <!-- Header Navbar -->
   <nav class="landing-nav">
     <a href="index.php" class="logo-container">
-      <div class="logo-icon">N</div>
-      <span class="logo-text">نوفا ستور</span>
+      <div class="logo-icon">M</div>
+      <span class="logo-text">متجر</span>
     </a>
     
     <ul class="landing-nav-links">
@@ -189,7 +189,7 @@
           <i class="fas fa-chevron-down"></i>
         </div>
         <div class="faq-answer">
-          لا، لا تطلب منصة نوفا ستور أي بيانات دفع لتنشيط الفترة التجريبية. يمكنك تسجيل حسابك والبدء في جرد مستودعاتك واستخدام الكاشير فوراً مجاناً لمدة 14 يوماً.
+          لا، لا تطلب منصة متجر أي بيانات دفع لتنشيط الفترة التجريبية. يمكنك تسجيل حسابك والبدء في جرد مستودعاتك واستخدام الكاشير فوراً مجاناً لمدة 14 يوماً.
         </div>
       </div>
 
@@ -228,11 +228,11 @@
   <!-- Footer Section -->
   <footer class="landing-footer">
     <a href="index.php" class="logo-container">
-      <div class="logo-icon">N</div>
-      <span class="logo-text">نوفا ستور</span>
+      <div class="logo-icon">M</div>
+      <span class="logo-text">متجر</span>
     </a>
-    <p style="font-size:14px; color:var(--text-secondary); max-width: 400px; line-height: 1.6;">منصة نوفا ستور السحابية لإدارة متجرك، مستودعاتك، مبيعاتك المباشرة، وحركة المخزون اللحظية بدقة متناهية.</p>
-    <div class="footer-copy">جميع الحقوق محفوظة &copy; 2026 منصة نوفا ستور.</div>
+    <p style="font-size:14px; color:var(--text-secondary); max-width: 400px; line-height: 1.6;">منصة متجر السحابية لإدارة متجرك، مستودعاتك، مبيعاتك المباشرة، وحركة المخزون اللحظية بدقة متناهية.</p>
+    <div class="footer-copy">جميع الحقوق محفوظة &copy; 2026 منصة متجر.</div>
   </footer>
 
   <!-- Script for Dark/Light Theme & Billing switcher & FAQ accordion -->

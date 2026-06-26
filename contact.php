@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تواصل معنا | نوفا ستور</title>
+  <title>تواصل معنا | متجر Matjer</title>
   
   <!-- CSS Stylesheets -->
   <link rel="stylesheet" href="css/variables.css?v=3.0">
@@ -19,8 +19,8 @@
   <!-- Header Navbar -->
   <nav class="landing-nav">
     <a href="index.php" class="logo-container">
-      <div class="logo-icon">N</div>
-      <span class="logo-text">نوفا ستور</span>
+      <div class="logo-icon">M</div>
+      <span class="logo-text">متجر</span>
     </a>
     
     <ul class="landing-nav-links">
@@ -125,7 +125,7 @@
         </div>
         <div class="contact-info-text-box">
           <span class="contact-info-label">البريد الإلكتروني للخدمات</span>
-          <span class="contact-info-value" style="font-family: var(--font-english); font-weight: 600;">sales@novastore.sa | support@novastore.sa</span>
+          <span class="contact-info-value" style="font-family: var(--font-english); font-weight: 600;">sales@matjer.net | support@matjer.net</span>
         </div>
       </div>
 
@@ -133,7 +133,7 @@
       <div class="map-placeholder">
         <div class="map-grid-pattern"></div>
         <i class="fas fa-map-pin map-marker-pin"></i>
-        <div style="z-index: 1; font-weight: 700; background-color: var(--bg-secondary); padding: 8px 16px; border-radius: var(--border-radius-xs); border: 1px solid var(--border-color); font-size: 11px; color: var(--text-primary); margin-top: 60px;">مقر نوفا ستور بالرياض</div>
+        <div style="z-index: 1; font-weight: 700; background-color: var(--bg-secondary); padding: 8px 16px; border-radius: var(--border-radius-xs); border: 1px solid var(--border-color); font-size: 11px; color: var(--text-primary); margin-top: 60px;">مقر منصة متجر بالرياض</div>
       </div>
     </div>
 
@@ -142,11 +142,11 @@
   <!-- Footer Section -->
   <footer class="landing-footer">
     <a href="index.php" class="logo-container">
-      <div class="logo-icon">N</div>
-      <span class="logo-text">نوفا ستور</span>
+      <div class="logo-icon">M</div>
+      <span class="logo-text">متجر</span>
     </a>
-    <p style="font-size:14px; color:var(--text-secondary); max-width: 400px; line-height: 1.6;">منصة نوفا ستور السحابية لإدارة متجرك، مستودعاتك، مبيعاتك المباشرة، وحركة المخزون اللحظية بدقة متناهية.</p>
-    <div class="footer-copy">جميع الحقوق محفوظة &copy; 2026 منصة نوفا ستور.</div>
+    <p style="font-size:14px; color:var(--text-secondary); max-width: 400px; line-height: 1.6;">منصة متجر السحابية لإدارة متجرك، مستودعاتك، مبيعاتك المباشرة، وحركة المخزون اللحظية بدقة متناهية.</p>
+    <div class="footer-copy">جميع الحقوق محفوظة &copy; 2026 منصة متجر.</div>
   </footer>
 
   <!-- Script for Dark/Light Theme & Contact Form submit logger -->

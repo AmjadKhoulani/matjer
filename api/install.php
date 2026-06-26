@@ -45,9 +45,9 @@ try {
         }
     }
     
-    // 4. Seed default Tenant: Nova Store (tenant_id = 1)
+    // 4. Seed default Tenant: Demo Store (tenant_id = 1)
     $stmt = $pdo->prepare("INSERT INTO `ns_tenants` (`id`, `name`, `slug`, `owner_name`, `email`, `phone`, `plan`, `status`, `theme_color`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->execute([1, 'متجر نوفا الرئيسي', 'nova-store', 'عبد العزيز الحربي', 'admin@novastore.sa', '+963 11 222 3333', 'Pro', 'Active', '#4f46e5']);
+    $stmt->execute([1, 'المتجر النموذجي', 'demo', 'عبد العزيز الحربي', 'admin@matjer.net', '+963 11 222 3333', 'Pro', 'Active', '#4f46e5']);
     
     // Seed second Tenant: بقالة النخبة الغذائية (tenant_id = 2) for testing SaaS
     $stmt->execute([2, 'بقالة النخبة الغذائية', 'al-nokhbah', 'محمد عبد الله الشمراني', 'owner@nokhbah.com', '+966 50 123 4567', 'Starter', 'Active', '#06b6d4']);
@@ -60,14 +60,14 @@ try {
     $stmt = $pdo->prepare("INSERT INTO `ns_users` (`tenant_id`, `username`, `password_hash`, `fullname`, `role`, `status`) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->execute([null, 'superadmin', $adminHash, 'سوبر أدمن المنصة', 'admin', 'active']);
     
-    // B. Tenant Admin for Nova Store (tenant_id = 1)
-    $stmt->execute([1, 'admin', $adminHash, 'مدير متجر نوفا', 'admin', 'active']);
+    // B. Tenant Admin (tenant_id = 1)
+    $stmt->execute([1, 'admin', $adminHash, 'مدير المتجر النموذجي', 'admin', 'active']);
     
-    // C. Tenant Warehouse for Nova Store (tenant_id = 1)
-    $stmt->execute([1, 'warehouse', $adminHash, 'أمين مستودع نوفا', 'warehouse', 'active']);
+    // C. Tenant Warehouse (tenant_id = 1)
+    $stmt->execute([1, 'warehouse', $adminHash, 'أمين المستودع', 'warehouse', 'active']);
     
-    // D. Tenant Sales for Nova Store (tenant_id = 1)
-    $stmt->execute([1, 'sales', $adminHash, 'كاشير مبيعات نوفا', 'sales', 'active']);
+    // D. Tenant Sales (tenant_id = 1)
+    $stmt->execute([1, 'sales', $adminHash, 'كاشير المبيعات', 'sales', 'active']);
     
     // E. Tenant Admin for Al-Nokhbah (tenant_id = 2)
     $stmt->execute([2, 'nokhbah_admin', $adminHash, 'مدير النخبة الغذائية', 'admin', 'active']);
@@ -95,7 +95,7 @@ try {
     $settings1 = [
         'ns_settings_currency' => 'SYP (ل.س)',
         'ns_settings_tax_rate' => '15%',
-        'ns_settings_store_name' => 'Nova Store',
+        'ns_settings_store_name' => 'Matjer Demo',
         'ns_settings_exchange_rate' => '15000',
         'ns_settings_sync_mode' => 'auto',
         'ns_active_theme' => 'jasmine',
@@ -125,7 +125,7 @@ try {
     
     // 9. Log activity for installation
     $stmt = $pdo->prepare("INSERT INTO `ns_activities` (`tenant_id`, `type`, `title`, `desc`) VALUES (?, ?, ?, ?)");
-    $stmt->execute([1, 'success', 'تهيئة النظام', 'تم تثبيت قاعدة البيانات بنجاح وزرع حسابات وتفضيلات متجر نوفا الرئيسي.']);
+    $stmt->execute([1, 'success', 'تهيئة النظام', 'تم تثبيت قاعدة البيانات بنجاح وزرع حسابات وتفضيلات المتجر النموذجي.']);
     $stmt->execute([2, 'success', 'تهيئة المتجر', 'تم إطلاق متجر النخبة الغذائية وتغذية البيانات الأساسية له.']);
     
     echo json_encode([
@@ -136,7 +136,7 @@ try {
         'admin_user' => 'admin',
         'admin_pass' => 'admin123',
         'tenants' => [
-            ['id' => 1, 'name' => 'متجر نوفا الرئيسي', 'slug' => 'nova-store'],
+            ['id' => 1, 'name' => 'المتجر النموذجي', 'slug' => 'demo'],
             ['id' => 2, 'name' => 'بقالة النخبة الغذائية', 'slug' => 'al-nokhbah']
         ]
     ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);

@@ -1,4 +1,4 @@
--- Nova Store ERP & eCommerce Multi-Tenant SaaS Database Schema
+-- Matjer ERP & eCommerce Multi-Tenant SaaS Database Schema
 
 -- 1. Tenants Table (إدارة المتاجر المشتركة في المنصة)
 CREATE TABLE IF NOT EXISTS `ns_tenants` (
@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `ns_tenants` (
   `phone` VARCHAR(30) DEFAULT NULL,
   `plan` ENUM('Starter', 'Pro', 'Enterprise') NOT NULL DEFAULT 'Pro',
   `status` ENUM('Active', 'Trial', 'Suspended') NOT NULL DEFAULT 'Active',
+  `custom_domain` VARCHAR(255) UNIQUE DEFAULT NULL,
   `logo_url` TEXT DEFAULT NULL,
   `theme_color` VARCHAR(20) DEFAULT '#4f46e5',
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP

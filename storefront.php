@@ -3123,7 +3123,7 @@ $active_theme = get_system_setting('ns_active_theme', 'jasmine');
         <a href="#">سياسة الخصوصية</a>
         <a href="#">شروط التوصيل</a>
       </div>
-      <p style="margin-top:10px; opacity:0.6;">&copy; 2026 متجر الياسمين الدمشقي. مدعوم بنظام نوفا ستور المتكامل للمستودعات السورية.</p>
+      <p style="margin-top:10px; opacity:0.6;">&copy; 2026 متجر الياسمين الدمشقي. مدعوم بنظام متجر المتكامل للمستودعات السورية.</p>
     </div>
   </footer>
 
