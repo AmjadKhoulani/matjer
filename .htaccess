@@ -1,0 +1,4 @@
+RewriteEngine On
+
+# Rewrite /admin or /admin/ to store-manager.php
+RewriteRule ^admin/?$ store-manager.php [L,QSA]

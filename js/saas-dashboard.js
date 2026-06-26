@@ -188,7 +188,7 @@ function renderMerchantSidebar() {
       </a>
     </li>
     <li class="menu-item">
-      <a href="store-manager.php?tenant=demo" class="menu-link" style="color: hsla(var(--primary), 1); font-weight: 700;">
+      <a href="admin" class="menu-link" style="color: hsla(var(--primary), 1); font-weight: 700;">
         <i class="fas fa-external-link-alt"></i>
         <span>تشغيل مستودع المتجر</span>
       </a>
@@ -279,7 +279,7 @@ function renderStoresTable() {
       <td>
         <div style="display: flex; gap: 8px; align-items: center;">
           <!-- Dynamic Launch Link -->
-          <a href="store-manager.php?tenant=${s.slug}" class="btn btn-secondary btn-sm" title="دخول إدارة المتجر والمستودعات"><i class="fas fa-external-link-alt"></i> دخول</a>
+          <a href="${window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'store-manager.php?tenant=' + s.slug : '//' + s.slug + '.matjer.net/admin'}" class="btn btn-secondary btn-sm" title="دخول إدارة المتجر والمستودعات"><i class="fas fa-external-link-alt"></i> دخول</a>
           <!-- Suspend/Activate Switch -->
           <button class="btn btn-secondary btn-sm btn-icon toggle-store-status-btn" data-id="${s.id}" style="color: ${s.status === 'Suspended' ? 'hsla(var(--success), 1)' : 'hsla(var(--danger), 1)'};" title="${s.status === 'Suspended' ? 'تنشيط الحساب' : 'تجميد الحساب'}">
             <i class="fas ${s.status === 'Suspended' ? 'fa-play' : 'fa-pause'}"></i>

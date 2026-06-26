@@ -9,11 +9,18 @@ if (!isset($_SESSION['user_id'])) {
 
 // Enforce SaaS Super Admin check (tenant_id must be NULL)
 if ($_SESSION['tenant_id'] !== null) {
-    $tenant = get_active_tenant_details();
-    $slug = $tenant ? $tenant['slug'] : 'nova-store';
-    header("Location: store-manager.php?tenant=" . urlencode($slug));
+    header("Location: admin");
     exit;
 }
+
+$demo_tenant = null;
+try {
+    $stmt = $pdo->query("SELECT * FROM `ns_tenants` ORDER BY `id` ASC LIMIT 1");
+    $demo_tenant = $stmt->fetch();
+} catch (Exception $e) {}
+
+$tenant_domain = $demo_tenant && !empty($demo_tenant['custom_domain']) ? $demo_tenant['custom_domain'] : ($demo_tenant ? $demo_tenant['slug'] . '.matjer.net' : 'demo.matjer.net');
+$store_admin_url = $demo_tenant && !empty($demo_tenant['custom_domain']) ? '//' . $demo_tenant['custom_domain'] . '/admin' : ($demo_tenant ? '//' . $demo_tenant['slug'] . '.matjer.net/admin' : 'admin');
 ?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" data-theme="light">
@@ -315,11 +322,11 @@ if ($_SESSION['tenant_id'] !== null) {
                   </div>
                   <div>
                     <h4 style="font-size: 18px; font-weight: 700;">متجرك الرئيسي</h4>
-                    <p style="font-size: 13px; color: var(--text-muted);">رابط متجرك: <a href="store-manager.php" target="_blank" style="color: hsla(var(--primary), 1); text-decoration: underline;">store-manager.php</a></p>
+                    <p style="font-size: 13px; color: var(--text-muted);">رابط متجرك: <a href="<?php echo htmlspecialchars($store_admin_url); ?>" target="_blank" style="color: hsla(var(--primary), 1); text-decoration: underline;"><?php echo htmlspecialchars($tenant_domain); ?>/admin</a></p>
                   </div>
                 </div>
                 
-                <a href="store-manager.php" class="btn btn-primary" style="padding: 12px 28px; font-size: 15px; border-radius: var(--border-radius-md);">
+                <a href="<?php echo htmlspecialchars($store_admin_url); ?>" class="btn btn-primary" style="padding: 12px 28px; font-size: 15px; border-radius: var(--border-radius-md);">
                   <i class="fas fa-external-link-alt"></i>
                   دخول لوحة إدارة المتجر والمستودعات
                 </a>

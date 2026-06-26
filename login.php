@@ -311,7 +311,7 @@ $tenant_slug = $tenant ? $tenant['slug'] : '';
             if (data.user.tenant_id === null) {
               window.location.href = 'dashboard.php'; // Superadmin to saas dashboard
             } else {
-              window.location.href = `store-manager.php?tenant=${tenantSlug}`;
+              window.location.href = 'admin';
             }
           }
         })
@@ -348,8 +348,8 @@ $tenant_slug = $tenant ? $tenant['slug'] : '';
           if (data.user.tenant_id === null) {
             window.location.href = 'dashboard.php';
           } else {
-            // Redirect to merchant manager with tenant slug
-            window.location.href = `store-manager.php?tenant=${tenantSlug}`;
+            // Redirect to merchant manager
+            window.location.href = 'admin';
           }
         } else {
           throw new Error(data.message || 'خطأ غير معروف في السيرفر.');
