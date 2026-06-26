@@ -1,16 +1,11 @@
 <?php
 // install.php - Automated Database Installer and Seeder for SaaS
-header("Content-Type: application/json; charset=utf-8");
-
-define('DB_HOST', 'localhost');
-define('DB_PORT', '3306');
-define('DB_USER', 'root');
-define('DB_PASS', 'root');
-define('DB_NAME', 'nova_store');
+require_once __DIR__ . '/config.php';
 
 try {
-    // 1. Connect without dbname to create it if missing
+    // 1. Connect without dbname to create it if missing (if permissions allow)
     $dsn = "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";charset=utf8mb4";
+    // Reuse existing PDO if connected, or establish connection
     $pdo = new PDO($dsn, DB_USER, DB_PASS);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
