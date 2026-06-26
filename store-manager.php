@@ -150,7 +150,7 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
     <aside class="sidebar">
       <div class="sidebar-header">
         <a href="#" class="logo-container">
-          <div class="logo-icon">N</div>
+          <div class="logo-icon">M</div>
           <span class="logo-text"><?php echo htmlspecialchars($store_name); ?></span>
         </a>
       </div>
