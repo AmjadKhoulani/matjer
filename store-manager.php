@@ -3595,6 +3595,6 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
   </div>
 
   <!-- Core JavaScript Module -->
-  <script type="module" src="js/app.js?v=3.2"></script>
+  <script type="module" src="js/app.js?v=3.3"></script>
 </body>
 </html>
