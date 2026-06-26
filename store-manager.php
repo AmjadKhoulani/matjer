@@ -85,6 +85,18 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>لوحة التحكم | <?php echo htmlspecialchars($store_name); ?></title>
+  <?php
+  $base_href = '/';
+  if (isset($_SERVER['SCRIPT_NAME'])) {
+      $base_href = dirname($_SERVER['SCRIPT_NAME']);
+      if ($base_href === '\\' || $base_href === '/') {
+          $base_href = '/';
+      } else {
+          $base_href = rtrim($base_href, '/') . '/';
+      }
+  }
+  ?>
+  <base href="<?php echo htmlspecialchars($base_href); ?>">
   
   <style>
     body { display: none !important; }

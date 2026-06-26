@@ -17,6 +17,18 @@ $tenant_slug = $tenant ? $tenant['slug'] : '';
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>تسجيل الدخول - لوحة تحكم <?php echo htmlspecialchars($store_name); ?></title>
+  <?php
+  $base_href = '/';
+  if (isset($_SERVER['SCRIPT_NAME'])) {
+      $base_href = dirname($_SERVER['SCRIPT_NAME']);
+      if ($base_href === '\\' || $base_href === '/') {
+          $base_href = '/';
+      } else {
+          $base_href = rtrim($base_href, '/') . '/';
+      }
+  }
+  ?>
+  <base href="<?php echo htmlspecialchars($base_href); ?>">
   
   <!-- CSS Stylesheets -->
   <link rel="stylesheet" href="css/variables.css?v=3.0">
