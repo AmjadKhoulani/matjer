@@ -12,6 +12,7 @@ export function initSettings() {
   loadStoreSettings();
   loadWarehouses();
   setupSettingsForm();
+  setupDomainSettingsForm();
   setupAddWarehouse();
   initPaymentShipping();
   initThemesSettings();
@@ -28,9 +29,15 @@ async function loadStoreSettings() {
       const currSelect = document.getElementById('settings-currency-select');
       const taxInput = document.getElementById('settings-tax-rate-input');
 
+      const slugInput = document.getElementById('settings-store-slug-input');
+      const customDomainInput = document.getElementById('settings-store-custom-domain-input');
+
       if (nameInput) nameInput.value = settings.ns_settings_store_name || '';
       if (currSelect) currSelect.value = settings.ns_settings_currency || 'SYP (ل.س)';
       if (taxInput) taxInput.value = settings.ns_settings_tax_rate || '15%';
+
+      if (slugInput) slugInput.value = settings.ns_tenant_slug || '';
+      if (customDomainInput) customDomainInput.value = settings.ns_tenant_custom_domain || '';
 
       // Backwards compatibility fallbacks
       localStorage.setItem('ns_settings_store_name', settings.ns_settings_store_name || '');
@@ -85,6 +92,54 @@ function setupSettingsForm() {
       }
     } catch (err) {
       alert('فشل حفظ الإعدادات على الخادم.');
+    }
+  });
+}
+
+function setupDomainSettingsForm() {
+  const form = document.getElementById('store-domain-settings-form');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const slug = document.getElementById('settings-store-slug-input').value.trim();
+    const customDomain = document.getElementById('settings-store-custom-domain-input').value.trim();
+
+    const payload = {
+      ns_tenant_slug: slug,
+      ns_tenant_custom_domain: customDomain
+    };
+
+    try {
+      const tenant = getTenantSlug();
+      const res = await fetch(`api/settings.php?tenant=${tenant}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const result = await res.json();
+      if (result.success) {
+        if (window.ActiveTenant) {
+          window.ActiveTenant.slug = slug;
+          window.ActiveTenant.custom_domain = customDomain || null;
+        }
+
+        // Keep page session query param aligned with new slug
+        const url = new URL(window.location.href);
+        if (url.searchParams.has('tenant')) {
+          url.searchParams.set('tenant', slug);
+          window.history.replaceState({}, '', url.toString());
+        }
+
+        store.addActivity('info', 'تحديث إعدادات الدومين', `تم تحديث النطاق الفرعي إلى (${slug}) والدومين المخصص إلى (${customDomain || 'لاشيء'})`);
+        alert('تم حفظ إعدادات الدومين بنجاح!');
+        loadStoreSettings();
+      } else {
+        alert('خطأ: ' + result.message);
+      }
+    } catch (err) {
+      alert('فشل حفظ إعدادات الدومين على الخادم.');
     }
   });
 }

@@ -29,6 +29,7 @@ if ($method === 'GET') {
         if ($tenantDetails) {
             $settings['ns_tenant_name'] = $tenantDetails['name'];
             $settings['ns_tenant_slug'] = $tenantDetails['slug'];
+            $settings['ns_tenant_custom_domain'] = $tenantDetails['custom_domain'];
             $settings['ns_tenant_logo'] = $tenantDetails['logo_url'];
             $settings['ns_tenant_color'] = $tenantDetails['theme_color'];
             $settings['ns_tenant_plan'] = $tenantDetails['plan'];
@@ -73,16 +74,58 @@ if ($method === 'POST') {
             }
         }
         
-        // Also allow updating theme color or logo directly in ns_tenants
-        if (isset($input['ns_tenant_color']) || isset($input['ns_tenant_logo']) || isset($input['ns_tenant_name'])) {
+        // Also allow updating theme color, logo, name, slug, or custom domain directly in ns_tenants
+        if (isset($input['ns_tenant_color']) || isset($input['ns_tenant_logo']) || isset($input['ns_tenant_name']) || isset($input['ns_tenant_slug']) || isset($input['ns_tenant_custom_domain'])) {
             $tenantDetails = get_active_tenant_details();
             if ($tenantDetails) {
                 $color = isset($input['ns_tenant_color']) ? trim($input['ns_tenant_color']) : $tenantDetails['theme_color'];
                 $logo = isset($input['ns_tenant_logo']) ? trim($input['ns_tenant_logo']) : $tenantDetails['logo_url'];
                 $name = isset($input['ns_tenant_name']) ? trim($input['ns_tenant_name']) : $tenantDetails['name'];
                 
-                $tStmt = $pdo->prepare("UPDATE `ns_tenants` SET `theme_color` = ?, `logo_url` = ?, `name` = ? WHERE `id` = ?");
-                $tStmt->execute([$color, $logo, $name, $tenant_id]);
+                $slug = isset($input['ns_tenant_slug']) ? trim($input['ns_tenant_slug']) : $tenantDetails['slug'];
+                // Clean slug: lowercase, alphanumeric and hyphens only
+                $slug = strtolower(preg_replace('/[^a-zA-Z0-9\-]/', '', $slug));
+                if (empty($slug)) {
+                    throw new Exception("اسم النطاق الفرعي غير صالح.");
+                }
+                
+                $custom_domain = null;
+                if (isset($input['ns_tenant_custom_domain'])) {
+                    $custom_domain = trim($input['ns_tenant_custom_domain']);
+                    if ($custom_domain !== '') {
+                        $custom_domain = strtolower(preg_replace('/^https?:\/\//i', '', $custom_domain));
+                        $custom_domain = rtrim(explode('/', $custom_domain)[0], ':'); // remove path or port
+                        $custom_domain = preg_replace('/^www\./i', '', $custom_domain); // store raw domain
+                        if (empty($custom_domain)) {
+                            $custom_domain = null;
+                        }
+                    } else {
+                        $custom_domain = null;
+                    }
+                } else {
+                    $custom_domain = $tenantDetails['custom_domain'];
+                }
+                
+                // Check uniqueness of slug if changed
+                if ($slug !== $tenantDetails['slug']) {
+                    $checkSlug = $pdo->prepare("SELECT COUNT(*) FROM `ns_tenants` WHERE `slug` = ? AND `id` != ?");
+                    $checkSlug->execute([$slug, $tenant_id]);
+                    if ($checkSlug->fetchColumn() > 0) {
+                        throw new Exception("النطاق الفرعي ($slug.matjer.net) محجوز لمتجر آخر، يرجى اختيار اسم آخر.");
+                    }
+                }
+                
+                // Check uniqueness of custom domain if changed
+                if ($custom_domain !== null && $custom_domain !== $tenantDetails['custom_domain']) {
+                    $checkDomain = $pdo->prepare("SELECT COUNT(*) FROM `ns_tenants` WHERE `custom_domain` = ? AND `id` != ?");
+                    $checkDomain->execute([$custom_domain, $tenant_id]);
+                    if ($checkDomain->fetchColumn() > 0) {
+                        throw new Exception("الدومين المخصص ($custom_domain) مستخدم بالفعل في متجر آخر.");
+                    }
+                }
+                
+                $tStmt = $pdo->prepare("UPDATE `ns_tenants` SET `theme_color` = ?, `logo_url` = ?, `name` = ?, `slug` = ?, `custom_domain` = ? WHERE `id` = ?");
+                $tStmt->execute([$color, $logo, $name, $slug, $custom_domain, $tenant_id]);
             }
         }
 

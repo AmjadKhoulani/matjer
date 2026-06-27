@@ -2024,6 +2024,62 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
                 <button type="submit" class="btn btn-primary" style="align-self:flex-start;"><i class="fas fa-save"></i> حفظ التغييرات العامة</button>
               </form>
             </div>
+
+            <div class="settings-card" style="grid-column: 1/-1;">
+              <h3 style="font-weight:700; color:var(--text-primary); font-size:16px;"><i class="fas fa-globe" style="color:hsla(var(--primary),1);"></i> إعدادات الدومين والربط المخصص</h3>
+              <form id="store-domain-settings-form" style="display:flex; flex-direction:column; gap:20px;">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">النطاق الفرعي للمنصة (Subdomain)</label>
+                    <div style="display:flex; align-items:stretch; direction:ltr;">
+                      <span style="background:var(--bg-tertiary); border:1px solid var(--border-color); border-right:none; border-radius:0 var(--border-radius-sm) var(--border-radius-sm) 0; padding:10px 14px; display:flex; align-items:center; color:var(--text-muted); font-family:var(--font-english); font-size:14px;">.matjer.net</span>
+                      <input type="text" class="form-control" id="settings-store-slug-input" required style="border-radius:var(--border-radius-sm) 0 0 var(--border-radius-sm); text-align:right; font-family:var(--font-english); text-transform:lowercase;">
+                    </div>
+                    <span style="font-size:11px; color:var(--text-muted); margin-top:4px; display:block; text-align:right;">عنوان متجرك الافتراضي على المنصة.</span>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">الدومين الخاص المخصص (Custom Domain)</label>
+                    <input type="text" class="form-control" id="settings-store-custom-domain-input" placeholder="example.com" style="font-family:var(--font-english); direction:ltr; text-align:left;">
+                    <span style="font-size:11px; color:var(--text-muted); margin-top:4px; display:block; text-align:right;">أدخل النطاق الخاص بك دون http أو https (مثال: novastore.com).</span>
+                  </div>
+                </div>
+                
+                <div style="background:var(--primary-light); border:1px solid hsla(var(--primary), 0.2); padding:16px; border-radius:var(--border-radius-sm); display:flex; flex-direction:column; gap:8px;">
+                  <h4 style="font-size:13px; font-weight:700; color:hsla(var(--primary), 1); display:flex; align-items:center; gap:6px; margin:0;"><i class="fas fa-info-circle"></i> تعليمات وإرشادات ربط الدومين المخصص</h4>
+                  <p style="font-size:12px; color:var(--text-secondary); line-height:1.6; margin:0;">
+                    لتوجيه نطاقك المخصص ليعمل على المنصة، يرجى الانتقال إلى لوحة التحكم الخاصة بمزود النطاق الخاص بك (مثل GoDaddy, Namecheap, Cloudflare) وإضافة السجل التالي:
+                  </p>
+                  <div style="overflow-x:auto;">
+                    <table style="width:100%; border-collapse:collapse; margin-top:8px; font-size:12px; font-family:var(--font-english); text-align:left; border:1px solid var(--border-color);">
+                      <thead>
+                        <tr style="background:hsla(var(--primary), 0.1); color:hsla(var(--primary), 1);">
+                          <th style="padding:8px 12px; font-weight:700; border-bottom:1px solid var(--border-color);">Type</th>
+                          <th style="padding:8px 12px; font-weight:700; border-bottom:1px solid var(--border-color);">Host / Name</th>
+                          <th style="padding:8px 12px; font-weight:700; border-bottom:1px solid var(--border-color);">Value / Destination</th>
+                          <th style="padding:8px 12px; font-weight:700; border-bottom:1px solid var(--border-color);">TTL</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr style="border-bottom:1px solid var(--border-color); background:var(--bg-primary);">
+                          <td style="padding:8px 12px; font-weight:600;">A</td>
+                          <td style="padding:8px 12px;">@</td>
+                          <td style="padding:8px 12px; font-weight:600; color:hsla(var(--primary), 1);">173.249.52.218</td>
+                          <td style="padding:8px 12px;">Automatic / 1 Hour</td>
+                        </tr>
+                        <tr style="background:var(--bg-primary);">
+                          <td style="padding:8px 12px; font-weight:600;">CNAME</td>
+                          <td style="padding:8px 12px;">www</td>
+                          <td style="padding:8px 12px; font-weight:600;">matjer.net</td>
+                          <td style="padding:8px 12px;">Automatic / 1 Hour</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="align-self:flex-start;"><i class="fas fa-save"></i> حفظ إعدادات الدومين</button>
+              </form>
+            </div>
           </div>
         </section>
 
@@ -3595,6 +3651,6 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
   </div>
 
   <!-- Core JavaScript Module -->
-  <script type="module" src="js/app.js?v=3.3"></script>
+  <script type="module" src="js/app.js?v=3.4"></script>
 </body>
 </html>
