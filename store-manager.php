@@ -178,6 +178,91 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
       --primary-hover: <?php echo $hsl[0] . ", " . $hsl[1] . "%, " . max(0, $hsl[2] - 10) . "%"; ?>;
       --primary-light: <?php echo $hsl[0] . ", " . $hsl[1] . "%, 95%"; ?>;
     }
+
+    /* Settings Hub Layout Styles */
+    #settings-hub-section {
+      display: none;
+    }
+    #settings-hub-section.active {
+      display: block;
+    }
+    .settings-hub-container {
+      display: flex;
+      min-height: calc(100vh - 70px);
+      background: var(--bg-primary);
+    }
+    @media (max-width: 768px) {
+      .settings-hub-container {
+        flex-direction: column;
+        height: auto;
+      }
+    }
+    .settings-hub-sidebar {
+      width: 280px;
+      border-inline-end: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    @media (max-width: 768px) {
+      .settings-hub-sidebar {
+        width: 100%;
+        border-inline-end: none;
+        border-bottom: 1px solid var(--border-color);
+        padding: 16px;
+      }
+    }
+    .settings-hub-tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid transparent;
+      border-radius: var(--border-radius-sm);
+      background: none;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: start;
+      transition: all var(--transition-normal);
+    }
+    .settings-hub-tab-btn:hover {
+      background-color: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+    .settings-hub-tab-btn.active {
+      background-color: hsla(var(--primary), 0.1);
+      color: hsla(var(--primary), 1);
+      border-color: hsla(var(--primary), 0.15);
+    }
+    .settings-hub-content {
+      flex-grow: 1;
+      padding: 32px;
+      overflow-y: auto;
+    }
+    @media (max-width: 768px) {
+      .settings-hub-content {
+        padding: 20px;
+      }
+    }
+    .settings-hub-panel {
+      display: none;
+    }
+    .settings-hub-panel.active {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      animation: settingsFadeIn 0.3s ease-in-out;
+    }
+    @keyframes settingsFadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
@@ -568,7 +653,15 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
         </li>
       </ul>
       
-      <div class="sidebar-footer" style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+      <!-- Shopify-style Settings Trigger Button -->
+      <div style="padding: 10px 16px; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 4px;">
+        <button class="settings-hub-btn-sidebar" id="btn-sidebar-settings-gear" type="button" style="display:flex; align-items:center; gap:12px; width:100%; padding:10px 12px; background:none; border:none; border-radius:var(--border-radius-sm); color:var(--text-secondary); font-size:14px; font-weight:600; cursor:pointer; text-align:start; transition:all var(--transition-normal); outline:none;" onclick="import('./js/app.js').then(m => m.navigateToView('settings-system'))">
+          <i class="fas fa-cog" style="font-size: 16px;"></i>
+          <span>الإعدادات</span>
+        </button>
+      </div>
+      
+      <div class="sidebar-footer" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; border-top: 1px solid var(--border-color);">
         <div class="user-profile-summary" style="flex-grow: 1;">
           <div class="user-avatar">مد</div>
           <div class="user-info">
@@ -1990,138 +2083,281 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
           </div>
         </section>
 
-        <!-- SECTION 13: SETTINGS SYSTEM -->
-        <section id="settings-system-section" class="view-section">
-          <div class="settings-grid">
-            <div class="settings-card" style="grid-column: 1/-1;">
-              <h3 style="font-weight:700; color:var(--text-primary); font-size:16px;"><i class="fas fa-sliders-h" style="color:hsla(var(--primary),1);"></i> تهيئة وتكوين المتجر العام</h3>
-              <form id="store-settings-form" style="display:flex; flex-direction:column; gap:20px;">
-                <div class="form-row">
-                  <div class="form-group">
-                    <label class="form-label">اسم المتجر / العلامة التجارية</label>
-                    <input type="text" class="form-control" id="settings-store-name-input" required>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">العملة الافتراضية</label>
-                    <select class="form-control" id="settings-currency-select">
-                      <option value="SYP (ل.س)">الليرة السورية (ل.س) - SYP</option>
-                      <option value="USD ($)">الدولار الأمريكي ($) - USD</option>
-                      <option value="SAR (ر.س)">الريال السعودي (ر.س) - SAR</option>
-                      <option value="AED (د.إ)">الدرهم الإماراتي (د.إ) - AED</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label class="form-label">نسبة ضريبة القيمة المضافة VAT (%)</label>
-                    <input type="text" class="form-control" id="settings-tax-rate-input" required>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">الرقم الضريبي المعتمد (المملكة العربية السعودية)</label>
-                    <input type="text" class="form-control" value="300109923800003" disabled style="background-color: var(--bg-tertiary);">
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-primary" style="align-self:flex-start;"><i class="fas fa-save"></i> حفظ التغييرات العامة</button>
-              </form>
-            </div>
-
-            <div class="settings-card" style="grid-column: 1/-1;">
-              <h3 style="font-weight:700; color:var(--text-primary); font-size:16px;"><i class="fas fa-globe" style="color:hsla(var(--primary),1);"></i> إعدادات الدومين والربط المخصص</h3>
-              <form id="store-domain-settings-form" style="display:flex; flex-direction:column; gap:20px;">
-                <div class="form-row">
-                  <div class="form-group">
-                    <label class="form-label">النطاق الفرعي للمنصة (Subdomain)</label>
-                    <div style="display:flex; align-items:stretch; direction:ltr;">
-                      <span style="background:var(--bg-tertiary); border:1px solid var(--border-color); border-right:none; border-radius:0 var(--border-radius-sm) var(--border-radius-sm) 0; padding:10px 14px; display:flex; align-items:center; color:var(--text-muted); font-family:var(--font-english); font-size:14px;">.matjer.net</span>
-                      <input type="text" class="form-control" id="settings-store-slug-input" required style="border-radius:var(--border-radius-sm) 0 0 var(--border-radius-sm); text-align:right; font-family:var(--font-english); text-transform:lowercase;">
-                    </div>
-                    <span style="font-size:11px; color:var(--text-muted); margin-top:4px; display:block; text-align:right;">عنوان متجرك الافتراضي على المنصة.</span>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">الدومين الخاص المخصص (Custom Domain)</label>
-                    <input type="text" class="form-control" id="settings-store-custom-domain-input" placeholder="example.com" style="font-family:var(--font-english); direction:ltr; text-align:left;">
-                    <span style="font-size:11px; color:var(--text-muted); margin-top:4px; display:block; text-align:right;">أدخل النطاق الخاص بك دون http أو https (مثال: novastore.com).</span>
-                  </div>
-                </div>
-                
-                <div style="background:var(--primary-light); border:1px solid hsla(var(--primary), 0.2); padding:16px; border-radius:var(--border-radius-sm); display:flex; flex-direction:column; gap:8px;">
-                  <h4 style="font-size:13px; font-weight:700; color:hsla(var(--primary), 1); display:flex; align-items:center; gap:6px; margin:0;"><i class="fas fa-info-circle"></i> تعليمات وإرشادات ربط الدومين المخصص</h4>
-                  <p style="font-size:12px; color:var(--text-secondary); line-height:1.6; margin:0;">
-                    لتوجيه نطاقك المخصص ليعمل على المنصة، يرجى الانتقال إلى لوحة التحكم الخاصة بمزود النطاق الخاص بك (مثل GoDaddy, Namecheap, Cloudflare) وإضافة السجل التالي:
-                  </p>
-                  <div style="overflow-x:auto;">
-                    <table style="width:100%; border-collapse:collapse; margin-top:8px; font-size:12px; font-family:var(--font-english); text-align:left; border:1px solid var(--border-color);">
-                      <thead>
-                        <tr style="background:hsla(var(--primary), 0.1); color:hsla(var(--primary), 1);">
-                          <th style="padding:8px 12px; font-weight:700; border-bottom:1px solid var(--border-color);">Type</th>
-                          <th style="padding:8px 12px; font-weight:700; border-bottom:1px solid var(--border-color);">Host / Name</th>
-                          <th style="padding:8px 12px; font-weight:700; border-bottom:1px solid var(--border-color);">Value / Destination</th>
-                          <th style="padding:8px 12px; font-weight:700; border-bottom:1px solid var(--border-color);">TTL</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr style="border-bottom:1px solid var(--border-color); background:var(--bg-primary);">
-                          <td style="padding:8px 12px; font-weight:600;">A</td>
-                          <td style="padding:8px 12px;">@</td>
-                          <td style="padding:8px 12px; font-weight:600; color:hsla(var(--primary), 1);">173.249.52.218</td>
-                          <td style="padding:8px 12px;">Automatic / 1 Hour</td>
-                        </tr>
-                        <tr style="background:var(--bg-primary);">
-                          <td style="padding:8px 12px; font-weight:600;">CNAME</td>
-                          <td style="padding:8px 12px;">www</td>
-                          <td style="padding:8px 12px; font-weight:600;">matjer.net</td>
-                          <td style="padding:8px 12px;">Automatic / 1 Hour</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                
-                <button type="submit" class="btn btn-primary" style="align-self:flex-start;"><i class="fas fa-save"></i> حفظ إعدادات الدومين</button>
-              </form>
-            </div>
-          </div>
-        </section>
-
-        <!-- SECTION 14: SETTINGS WAREHOUSES -->
-        <section id="settings-warehouses-section" class="view-section">
-          <div class="settings-grid">
-            <div class="settings-card" style="grid-column: 1/-1;">
-              <h3 style="font-weight:700; color:var(--text-primary); font-size:16px;"><i class="fas fa-warehouse" style="color:hsla(var(--primary),1);"></i> إدارة المستودعات الجغرافية النشطة</h3>
+        <!-- SECTION 13: SETTINGS HUB (SHOPIFY STYLE) -->
+        <section id="settings-system-section" class="view-section" style="padding:0; margin:0;">
+          <div class="settings-hub-container">
+            <!-- Settings Sidebar -->
+            <aside class="settings-hub-sidebar">
+              <h3 style="font-size:14px; font-weight:800; color:var(--text-muted); padding:0 12px 10px 12px; margin:0; border-bottom:1px solid var(--border-color); margin-bottom:10px; display:flex; align-items:center; gap:8px;">
+                <i class="fas fa-cog"></i> إعدادات المتجر
+              </h3>
+              <button class="settings-hub-tab-btn active" data-settings-tab="general" type="button">
+                <i class="fas fa-sliders-h"></i> التفاصيل العامة
+              </button>
+              <button class="settings-hub-tab-btn" data-settings-tab="domains" type="button">
+                <i class="fas fa-globe"></i> النطاقات والربط
+              </button>
+              <button class="settings-hub-tab-btn" data-settings-tab="locations" type="button">
+                <i class="fas fa-warehouse"></i> المواقع والمستودعات
+              </button>
+              <button class="settings-hub-tab-btn" data-settings-tab="payments-shipping" type="button">
+                <i class="fas fa-credit-card"></i> الدفع والشحن
+              </button>
+              <button class="settings-hub-tab-btn" data-settings-tab="themes" type="button">
+                <i class="fas fa-palette"></i> مظهر وثيمات المتجر
+              </button>
               
-              <div class="warehouses-grid" id="settings-warehouses-grid">
-                <!-- Loaded dynamically in settings.js -->
-              </div>
-            </div>
+              <button class="btn btn-secondary btn-sm" id="btn-close-settings-hub" type="button" style="margin-top:auto; display:flex; align-items:center; justify-content:center; gap:8px; width:100%;">
+                <i class="fas fa-arrow-right"></i> الرجوع للوحة التحكم
+              </button>
+            </aside>
 
-            <div class="settings-card" style="grid-column: 1/-1;">
-              <h3 style="font-weight:700; color:var(--text-primary); font-size:16px;"><i class="fas fa-plus" style="color:hsla(var(--success),1);"></i> إضافة موقع مستودع جغرافي جديد</h3>
-              <form id="add-warehouse-form" style="display:flex; flex-direction:column; gap:16px;">
-                <div class="form-row">
-                  <div class="form-group">
-                    <label class="form-label">اسم المستودع الجديد</label>
-                    <input type="text" class="form-control" id="wh-name" required placeholder="مثال: مستودع المنطقة الشرقية بالدمام">
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">العنوان الجغرافي التفصيلي</label>
-                    <input type="text" class="form-control" id="wh-address" required placeholder="مثال: حي الكورنيش، الدمام">
+            <!-- Settings Content Panels -->
+            <div class="settings-hub-content">
+              
+              <!-- PANEL 1: General Details -->
+              <div class="settings-hub-panel active" id="panel-settings-general">
+                <div class="settings-card" style="width:100%;">
+                  <h3 style="font-weight:700; color:var(--text-primary); font-size:16px; margin-bottom:20px;"><i class="fas fa-sliders-h" style="color:hsla(var(--primary),1); margin-inline-end:8px;"></i> تهيئة وتكوين المتجر العام</h3>
+                  <form id="store-settings-form" style="display:flex; flex-direction:column; gap:20px;">
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label class="form-label">اسم المتجر / العلامة التجارية</label>
+                        <input type="text" class="form-control" id="settings-store-name-input" required>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label">العملة الافتراضية</label>
+                        <select class="form-control" id="settings-currency-select">
+                          <option value="SYP (ل.س)">الليرة السورية (ل.س) - SYP</option>
+                          <option value="USD ($)">الدولار الأمريكي ($) - USD</option>
+                          <option value="SAR (ر.س)">الريال السعودي (ر.س) - SAR</option>
+                          <option value="AED (د.إ)">الدرهم الإماراتي (د.إ) - AED</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label class="form-label">نسبة ضريبة القيمة المضافة VAT (%)</label>
+                        <input type="text" class="form-control" id="settings-tax-rate-input" required>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label">الرقم الضريبي المعتمد (المملكة العربية السعودية)</label>
+                        <input type="text" class="form-control" value="300109923800003" disabled style="background-color: var(--bg-tertiary);">
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="align-self:flex-start;"><i class="fas fa-save"></i> حفظ التغييرات العامة</button>
+                  </form>
+                </div>
+              </div>
+
+              <!-- PANEL 2: Domains & Binding -->
+              <div class="settings-hub-panel" id="panel-settings-domains">
+                <div class="settings-card" style="width:100%;">
+                  <h3 style="font-weight:700; color:var(--text-primary); font-size:16px; margin-bottom:20px;"><i class="fas fa-globe" style="color:hsla(var(--primary),1); margin-inline-end:8px;"></i> إعدادات الدومين والربط المخصص</h3>
+                  <form id="store-domain-settings-form" style="display:flex; flex-direction:column; gap:20px;">
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label class="form-label">النطاق الفرعي للمنصة (Subdomain)</label>
+                        <div style="display:flex; align-items:stretch; direction:ltr;">
+                          <span style="background:var(--bg-tertiary); border:1px solid var(--border-color); border-right:none; border-radius:0 var(--border-radius-sm) var(--border-radius-sm) 0; padding:10px 14px; display:flex; align-items:center; color:var(--text-muted); font-family:var(--font-english); font-size:14px;">.matjer.net</span>
+                          <input type="text" class="form-control" id="settings-store-slug-input" required style="border-radius:var(--border-radius-sm) 0 0 var(--border-radius-sm); text-align:right; font-family:var(--font-english); text-transform:lowercase;">
+                        </div>
+                        <span style="font-size:11px; color:var(--text-muted); margin-top:4px; display:block; text-align:right;">عنوان متجرك الافتراضي على المنصة.</span>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label">الدومين الخاص المخصص (Custom Domain)</label>
+                        <input type="text" class="form-control" id="settings-store-custom-domain-input" placeholder="example.com" style="font-family:var(--font-english); direction:ltr; text-align:left;">
+                        <span style="font-size:11px; color:var(--text-muted); margin-top:4px; display:block; text-align:right;">أدخل النطاق الخاص بك دون http أو https (مثال: novastore.com).</span>
+                      </div>
+                    </div>
+                    
+                    <div style="background:var(--primary-light); border:1px solid hsla(var(--primary), 0.2); padding:16px; border-radius:var(--border-radius-sm); display:flex; flex-direction:column; gap:8px;">
+                      <h4 style="font-size:13px; font-weight:700; color:hsla(var(--primary), 1); display:flex; align-items:center; gap:6px; margin:0;"><i class="fas fa-info-circle"></i> تعليمات وإرشادات ربط الدومين المخصص</h4>
+                      <p style="font-size:12px; color:var(--text-secondary); line-height:1.6; margin:0;">
+                        لتوجيه نطاقك المخصص ليعمل على المنصة، يرجى الانتقال إلى لوحة التحكم الخاصة بمزود النطاق الخاص بك (مثل GoDaddy, Namecheap, Cloudflare) وإضافة السجل التالي:
+                      </p>
+                      <div style="overflow-x:auto;">
+                        <table style="width:100%; border-collapse:collapse; margin-top:8px; font-size:12px; font-family:var(--font-english); text-align:left; border:1px solid var(--border-color);">
+                          <thead>
+                            <tr style="background:hsla(var(--primary), 0.1); color:hsla(var(--primary), 1);">
+                              <th style="padding:8px 12px; font-weight:700; border-bottom:1px solid var(--border-color);">Type</th>
+                              <th style="padding:8px 12px; font-weight:700; border-bottom:1px solid var(--border-color);">Host / Name</th>
+                              <th style="padding:8px 12px; font-weight:700; border-bottom:1px solid var(--border-color);">Value / Destination</th>
+                              <th style="padding:8px 12px; font-weight:700; border-bottom:1px solid var(--border-color);">TTL</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr style="border-bottom:1px solid var(--border-color); background:var(--bg-primary);">
+                              <td style="padding:8px 12px; font-weight:600;">A</td>
+                              <td style="padding:8px 12px;">@</td>
+                              <td style="padding:8px 12px; font-weight:600; color:hsla(var(--primary), 1);">173.249.52.218</td>
+                              <td style="padding:8px 12px;">Automatic / 1 Hour</td>
+                            </tr>
+                            <tr style="background:var(--bg-primary);">
+                              <td style="padding:8px 12px; font-weight:600;">CNAME</td>
+                              <td style="padding:8px 12px;">www</td>
+                              <td style="padding:8px 12px; font-weight:600;">matjer.net</td>
+                              <td style="padding:8px 12px;">Automatic / 1 Hour</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="align-self:flex-start;"><i class="fas fa-save"></i> حفظ إعدادات الدومين</button>
+                  </form>
+                </div>
+              </div>
+
+              <!-- PANEL 3: Locations & Warehouses -->
+              <div class="settings-hub-panel" id="panel-settings-locations">
+                <div class="settings-card" style="width:100%;">
+                  <h3 style="font-weight:700; color:var(--text-primary); font-size:16px; margin-bottom:20px;"><i class="fas fa-warehouse" style="color:hsla(var(--primary),1); margin-inline-end:8px;"></i> إدارة المستودعات الجغرافية النشطة</h3>
+                  <div class="warehouses-grid" id="settings-warehouses-grid">
+                    <!-- Loaded dynamically in settings.js -->
                   </div>
                 </div>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label class="form-label">اسم المسؤول عن المستودع</label>
-                    <input type="text" class="form-control" id="wh-contact" required placeholder="مثال: م. عبد العزيز الدوسري">
+
+                <div class="settings-card" style="width:100%; margin-top:24px;">
+                  <h3 style="font-weight:700; color:var(--text-primary); font-size:16px; margin-bottom:20px;"><i class="fas fa-plus" style="color:hsla(var(--success),1); margin-inline-end:8px;"></i> إضافة موقع مستودع جغرافي جديد</h3>
+                  <form id="add-warehouse-form" style="display:flex; flex-direction:column; gap:16px;">
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label class="form-label">اسم المستودع الجديد</label>
+                        <input type="text" class="form-control" id="wh-name" required placeholder="مثال: مستودع المنطقة الشرقية بالدمام">
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label">العنوان الجغرافي التفصيلي</label>
+                        <input type="text" class="form-control" id="wh-address" required placeholder="مثال: حي الكورنيش، الدمام">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label class="form-label">اسم المسؤول عن المستودع</label>
+                        <input type="text" class="form-control" id="wh-contact" required placeholder="مثال: م. عبد العزيز الدوسري">
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label">رقم الهاتف للتواصل</label>
+                        <input type="text" class="form-control" id="wh-phone" required placeholder="مثال: +966 53 555 7777">
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="align-self:flex-start;"><i class="fas fa-plus"></i> تأكيد إضافة المستودع</button>
+                  </form>
+                </div>
+              </div>
+
+              <!-- PANEL 4: Payments & Shipping -->
+              <div class="settings-hub-panel" id="panel-settings-payments-shipping">
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px;">
+                  <!-- Payment Gateways -->
+                  <div class="settings-card">
+                    <h3 style="font-weight:700; color:var(--text-primary); font-size:15px; margin-bottom:20px;"><i class="fas fa-credit-card" style="color:hsla(var(--primary),1); margin-inline-end:8px;"></i> تفعيل بوابات الدفع الإلكتروني</h3>
+                    <div class="permission-list" id="payment-gateways-list" style="margin-bottom: 20px;">
+                      <!-- Checkboxes -->
+                    </div>
+                    <button class="btn btn-primary btn-sm" id="btn-save-gateways" style="width:100%;">حفظ بوابات الدفع</button>
                   </div>
-                  <div class="form-group">
-                    <label class="form-label">رقم الهاتف للتواصل</label>
-                    <input type="text" class="form-control" id="wh-phone" required placeholder="مثال: +966 53 555 7777">
+                  
+                  <!-- Shipping Carriers -->
+                  <div class="settings-card">
+                    <h3 style="font-weight:700; color:var(--text-primary); font-size:15px; margin-bottom:20px;"><i class="fas fa-shipping-fast" style="color:hsla(var(--info),1); margin-inline-end:8px;"></i> تفعيل شركات الشحن وتوليد البوالص</h3>
+                    <div class="permission-list" id="shipping-carriers-list" style="margin-bottom: 20px;">
+                      <!-- Checkboxes -->
+                    </div>
+                    <button class="btn btn-primary btn-sm" id="btn-save-carriers" style="width:100%;">حفظ شركات الشحن</button>
                   </div>
                 </div>
-                <button type="submit" class="btn btn-primary" style="align-self:flex-start;"><i class="fas fa-plus"></i> تأكيد إضافة المستودع</button>
-              </form>
+              </div>
+
+              <!-- PANEL 5: Themes Selection -->
+              <div class="settings-hub-panel" id="panel-settings-themes">
+                <div class="settings-card" style="width:100%; display:flex; flex-direction:column; gap:20px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); padding-bottom:15px; flex-wrap:wrap; gap:12px;">
+                    <div>
+                      <h3 style="font-weight:800; color:var(--text-primary); font-size:18px;"><i class="fas fa-palette" style="color:hsla(var(--primary),1); margin-inline-end:8px;"></i> مكتبة قوالب وثيمات المتاجر الفرونت اند</h3>
+                      <p style="font-size:12px; color:var(--text-muted); margin-top:4px;">اختر مظهر متجرك الإلكتروني الموجه للعملاء (Storefront) وقم بتهيئة طابعه البصري</p>
+                    </div>
+                    <a href="<?php echo htmlspecialchars($storefront_url); ?>" target="_blank" class="btn btn-primary" style="display:flex; align-items:center; gap:8px;"><i class="fas fa-external-link-alt"></i> معاينة واجهة المتجر (Frontend)</a>
+                  </div>
+
+                  <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap:20px; margin-top:10px;">
+                    <!-- Jasmine Theme Card -->
+                    <div style="border:1px solid var(--border-color); border-radius:var(--border-radius); overflow:hidden; background-color:var(--bg-secondary); display:flex; flex-direction:column; box-shadow:0 4px 6px rgba(0,0,0,0.05); transition:transform 0.2s; cursor:pointer;" class="theme-card active" id="theme-card-jasmine">
+                      <div style="height:160px; background: linear-gradient(135deg, #1b4d3e 0%, #004d40 100%); padding:20px; display:flex; flex-direction:column; justify-content:space-between; color:#fdfbf7; position:relative;">
+                        <div style="font-family:'Amiri', serif; font-size:24px; font-weight:700; border-bottom:1px solid rgba(253,251,247,0.2); padding-bottom:5px;">متجر الياسمين الدمشقي</div>
+                        <div style="font-size:11px; opacity:0.8; line-height:1.4;">
+                          • خطوط سريـف كلاسيكية مريحة<br>
+                          • ألوان مستوحاة من البيوت الدمشقية التراثية<br>
+                          • تجربة تسوق سريعة وموجهة للسوق السورية
+                        </div>
+                        <span class="badge badge-success" id="badge-jasmine" style="position:absolute; top:15px; left:15px; background-color:#c5a880; color:#1b4d3e; font-weight:700;">نشط حالياً</span>
+                      </div>
+                      <div style="padding:16px; display:flex; flex-direction:column; gap:12px; flex-grow:1; justify-content:space-between;">
+                        <div>
+                          <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-weight:700; font-size:14px; color:var(--text-primary);">قالب الياسمين (Jasmine)</span>
+                            <span style="font-size:11px; color:#1b4d3e; font-weight:600; background:#f4f0ea; padding:2px 6px; border-radius:4px;">تراثي كلاسيك</span>
+                          </div>
+                          <p style="font-size:12px; color:var(--text-muted); margin-top:8px; line-height:1.5;">تصميم تراثي أنيق يناسب تجارة المنتجات التقليدية، الألبسة الشرقية، العطور والحلويات مع سرعة استجابة فائقة.</p>
+                        </div>
+                        <button class="btn btn-secondary btn-sm" id="btn-activate-jasmine" style="width:100%;" type="button"><i class="fas fa-check"></i> تم التفعيل كافتراضي</button>
+                      </div>
+                    </div>
+
+                    <!-- Ella Theme Card -->
+                    <div style="border:1px solid var(--border-color); border-radius:var(--border-radius); overflow:hidden; background-color:var(--bg-secondary); display:flex; flex-direction:column; box-shadow:0 4px 6px rgba(0,0,0,0.05); transition:transform 0.2s; cursor:pointer;" class="theme-card" id="theme-card-ella">
+                      <div style="height:160px; background: linear-gradient(135deg, #111111 0%, #333333 100%); padding:20px; display:flex; flex-direction:column; justify-content:space-between; color:white; position:relative;">
+                        <div style="font-family:'Outfit', sans-serif; font-size:24px; font-weight:800; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,0.2); padding-bottom:5px;">ELLA FASHION</div>
+                        <div style="font-size:11px; opacity:0.8; line-height:1.4;">
+                          • تخطيط عصري شبكي للملابس والأزياء<br>
+                          • فلاتر متقدمة للمقاسات والألوان والماركات<br>
+                          • بنرات تسويقية ديناميكية جذابة
+                        </div>
+                        <span class="badge badge-success" id="badge-ella" style="position:absolute; top:15px; left:15px; background-color:#d12442; color:white; font-weight:700; display:none;">نشط حالياً</span>
+                      </div>
+                      <div style="padding:16px; display:flex; flex-direction:column; gap:12px; flex-grow:1; justify-content:space-between;">
+                        <div>
+                          <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-weight:700; font-size:14px; color:var(--text-primary);">قالب إيلا للموضة (Ella)</span>
+                            <span style="font-size:11px; color:#d12442; font-weight:600; background:#fdf2f4; padding:2px 6px; border-radius:4px;">موضة وأزياء</span>
+                          </div>
+                          <p style="font-size:12px; color:var(--text-muted); margin-top:8px; line-height:1.5;">ثيم الموضة والأناقة الأول، يدعم عرض خيارات مقاسات وألوان المنتجات بشكل احترافي، مناسب لمتاجر الملابس والأحذية.</p>
+                        </div>
+                        <button class="btn btn-secondary btn-sm" id="btn-activate-ella" style="width:100%;" type="button"><i class="fas fa-toggle-on"></i> تفعيل كافتراضي للمتجر</button>
+                      </div>
+                    </div>
+
+                    <!-- Woodmart Theme Card -->
+                    <div style="border:1px solid var(--border-color); border-radius:var(--border-radius); overflow:hidden; background-color:var(--bg-secondary); display:flex; flex-direction:column; box-shadow:0 4px 6px rgba(0,0,0,0.05); transition:transform 0.2s; cursor:pointer;" class="theme-card" id="theme-card-woodmart">
+                      <div style="height:160px; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); padding:20px; display:flex; flex-direction:column; justify-content:space-between; color:#f8fafc; position:relative;">
+                        <div style="font-family:'Outfit', sans-serif; font-size:24px; font-weight:800; color:#38bdf8; border-bottom:1px solid rgba(56,189,248,0.2); padding-bottom:5px;">WOODMART</div>
+                        <div style="font-size:11px; opacity:0.8; line-height:1.4;">
+                          • مثالي للإلكترونيات والأجهزة والقطع<br>
+                          • شريط بحث ذكي بالـ AJAX مدمج بالهيدر<br>
+                          • مقارنة المنتجات وقائمة المفضلة المتقدمة
+                        </div>
+                        <span class="badge badge-success" id="badge-woodmart" style="position:absolute; top:15px; left:15px; background-color:#ffcc00; color:#0f172a; font-weight:700; display:none;">نشط حالياً</span>
+                      </div>
+                      <div style="padding:16px; display:flex; flex-direction:column; gap:12px; flex-grow:1; justify-content:space-between;">
+                        <div>
+                          <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-weight:700; font-size:14px; color:var(--text-primary);">قالب وودمارت (WoodMart)</span>
+                            <span style="font-size:11px; color:#0369a1; font-weight:600; background:#f0f9ff; padding:2px 6px; border-radius:4px;">إلكترونيات ومتاجر ضخمة</span>
+                          </div>
+                          <p style="font-size:12px; color:var(--text-muted); margin-top:8px; line-height:1.5;">تصميم عصري تقني للمتاجر الإلكترونية الضخمة ووكالات الأجهزة الرقمية، يدعم المقارنات ومفصل ومريح للعين.</p>
+                        </div>
+                        <button class="btn btn-secondary btn-sm" id="btn-activate-woodmart" style="width:100%;" type="button"><i class="fas fa-toggle-on"></i> تفعيل كافتراضي للمتجر</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </section>
+
+
 
         <!-- SECTION 15: WAREHOUSE TRANSFERS -->
         <section id="warehouse-transfers-section" class="view-section">
@@ -2606,137 +2842,9 @@ $hsl_str = $hsl[0] . ", " . $hsl[1] . "%, " . $hsl[2] . "%";
           </div>
         </section>
 
-        <section id="settings-payment-shipping-section" class="view-section">
-          <div class="settings-grid">
-            <!-- Payment Gateways -->
-            <div class="settings-card">
-              <h3 style="font-weight:700; color:var(--text-primary); font-size:15px;"><i class="fas fa-credit-card" style="color:hsla(var(--primary),1);"></i> تفعيل بوابات الدفع الإلكتروني</h3>
-              <div class="permission-list" id="payment-gateways-list">
-                <!-- Checkboxes -->
-              </div>
-              <button class="btn btn-primary btn-sm" id="btn-save-gateways" style="width:100%;">حفظ بوابات الدفع</button>
-            </div>
-            
-            <!-- Shipping Carriers -->
-            <div class="settings-card">
-              <h3 style="font-weight:700; color:var(--text-primary); font-size:15px;"><i class="fas fa-shipping-fast" style="color:hsla(var(--info),1);"></i> تفعيل شركات الشحن وتوليد البوالص</h3>
-              <div class="permission-list" id="shipping-carriers-list">
-                <!-- Checkboxes -->
-              </div>
-              <button class="btn btn-primary btn-sm" id="btn-save-carriers" style="width:100%;">حفظ شركات الشحن</button>
-            </div>
-          </div>
-        </section>
 
-        <!-- SECTION 23: SETTINGS THEMES -->
-        <section id="settings-themes-section" class="view-section">
-          <div class="settings-grid">
-            <div class="settings-card" style="grid-column:1/-1; display:flex; flex-direction:column; gap:20px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); padding-bottom:15px; flex-wrap:wrap; gap:12px;">
-                <div>
-                  <h3 style="font-weight:800; color:var(--text-primary); font-size:18px;"><i class="fas fa-palette" style="color:hsla(var(--primary),1); margin-inline-end:8px;"></i> مكتبة قوالب وثيمات المتاجر الفرونت اند</h3>
-                  <p style="font-size:12px; color:var(--text-muted); margin-top:4px;">اختر مظهر متجرك الإلكتروني الموجه للعملاء (Storefront) وقم بتهيئة طابعه البصري</p>
-                </div>
-                <a href="<?php echo htmlspecialchars($storefront_url); ?>" target="_blank" class="btn btn-primary" style="display:flex; align-items:center; gap:8px;"><i class="fas fa-external-link-alt"></i> معاينة واجهة المتجر (Frontend)</a>
-              </div>
 
-              <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap:20px; margin-top:10px;">
-                <!-- Jasmine Theme Card -->
-                <div style="border:1px solid var(--border-color); border-radius:var(--border-radius); overflow:hidden; background-color:var(--bg-secondary); display:flex; flex-direction:column; box-shadow:0 4px 6px rgba(0,0,0,0.05); transition:transform 0.2s; cursor:pointer;" class="theme-card active" id="theme-card-jasmine">
-                  <!-- Visual Preview Mockup -->
-                  <div style="height:160px; background: linear-gradient(135deg, #1b4d3e 0%, #004d40 100%); padding:20px; display:flex; flex-direction:column; justify-content:space-between; color:#fdfbf7; position:relative;">
-                    <div style="font-family:'Amiri', serif; font-size:24px; font-weight:700; border-bottom:1px solid rgba(253,251,247,0.2); padding-bottom:5px;">متجر الياسمين الدمشقي</div>
-                    <div style="font-size:11px; opacity:0.8; line-height:1.4;">
-                      • خطوط سريـف كلاسيكية مريحة<br>
-                      • ألوان مستوحاة من البيوت الدمشقية التراثية<br>
-                      • تجربة تسوق سريعة وموجهة للسوق السورية
-                    </div>
-                    <span class="badge badge-success" id="badge-jasmine" style="position:absolute; top:15px; left:15px; background-color:#c5a880; color:#1b4d3e; font-weight:700;">نشط حالياً</span>
-                  </div>
-                  
-                  <!-- Info Footer -->
-                  <div style="padding:16px; display:flex; flex-direction:column; gap:12px; flex-grow:1; justify-content:space-between;">
-                    <div>
-                      <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <h4 style="font-weight:700; font-size:15px; color:var(--text-primary);">ثيم الياسمين الدمشقي (Jasmine Theme)</h4>
-                        <span style="font-size:11px; color:#10b981; font-weight:700;">متاح مجاناً</span>
-                      </div>
-                      <p style="font-size:12px; color:var(--text-muted); margin-top:6px; line-height:1.4;">القالب الافتراضي المخصص للسوق السورية. يعتمد على درجات الأخضر الياسميني الفاخر مع لون البيج الهادئ واللمسات الذهبية العتيقة.</p>
-                    </div>
-                    
-                    <div style="display:flex; gap:10px; border-top:1px solid var(--border-color); padding-top:12px; align-items:center;">
-                      <button class="btn btn-primary btn-sm" id="btn-activate-jasmine" style="flex:2;"><i class="fas fa-check"></i> تم التفعيل كافتراضي</button>
-                      <a href="<?php echo htmlspecialchars($storefront_url . ($is_local ? '&' : '?') . 'preview=jasmine'); ?>" target="_blank" class="btn btn-secondary btn-sm" style="flex:1.2; display:flex; align-items:center; justify-content:center; gap:6px; text-decoration:none; height:36px; padding:0 8px; font-size:12px; font-weight:600;"><i class="fas fa-eye"></i> معاينة</a>
-                      <button class="btn btn-secondary btn-sm btn-icon" title="خصائص المظهر والتخصيص"><i class="fas fa-cog"></i></button>
-                    </div>
-                  </div>
-                </div>
 
-                <!-- Ella Theme Card -->
-                <div style="border:1px solid var(--border-color); border-radius:var(--border-radius); overflow:hidden; background-color:var(--bg-secondary); display:flex; flex-direction:column; box-shadow:0 4px 6px rgba(0,0,0,0.05); transition:transform 0.2s; cursor:pointer;" class="theme-card" id="theme-card-ella">
-                  <!-- Visual Preview Mockup -->
-                  <div style="height:160px; background: linear-gradient(135deg, #111111 0%, #232323 100%); padding:20px; display:flex; flex-direction:column; justify-content:space-between; color:#ffffff; position:relative;">
-                    <div style="font-family:'Jost', sans-serif; font-size:24px; font-weight:800; border-bottom:1px solid rgba(255,255,255,0.2); padding-bottom:5px; text-transform:uppercase; letter-spacing:1px;">ELLA FASHION STORE</div>
-                    <div style="font-size:11px; opacity:0.8; line-height:1.4;">
-                      • تصميم مسطح وعصري عالي التباين<br>
-                      • متوافق بالكامل مع متجر Ella 7 العالمي<br>
-                      • خيارات عرض مقاسات وألوان وتصفية ذكية
-                    </div>
-                    <span class="badge badge-success" id="badge-ella" style="position:absolute; top:15px; left:15px; background-color:#d12442; color:#ffffff; font-weight:700; display:none;">نشط حالياً</span>
-                  </div>
-                  
-                  <!-- Info Footer -->
-                  <div style="padding:16px; display:flex; flex-direction:column; gap:12px; flex-grow:1; justify-content:space-between;">
-                    <div>
-                      <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <h4 style="font-weight:700; font-size:15px; color:var(--text-primary);">ثيم إيلا للألبسة والموضة (Ella Theme)</h4>
-                        <span style="font-size:11px; color:#10b981; font-weight:700;">متاح مجاناً</span>
-                      </div>
-                      <p style="font-size:12px; color:var(--text-muted); margin-top:6px; line-height:1.4;">التصميم العالمي الشهير للملابس والأزياء. يعتمد على تبويبات متباينة باللون الأسود والأبيض الجريء مع خطوط Jost وعرض أنيق للمقاسات.</p>
-                    </div>
-                    
-                    <div style="display:flex; gap:10px; border-top:1px solid var(--border-color); padding-top:12px; align-items:center;">
-                      <button class="btn btn-primary btn-sm" id="btn-activate-ella" style="flex:2;"><i class="fas fa-toggle-on"></i> تفعيل كافتراضي للمتجر</button>
-                      <a href="<?php echo htmlspecialchars($storefront_url . ($is_local ? '&' : '?') . 'preview=ella'); ?>" target="_blank" class="btn btn-secondary btn-sm" style="flex:1.2; display:flex; align-items:center; justify-content:center; gap:6px; text-decoration:none; height:36px; padding:0 8px; font-size:12px; font-weight:600;"><i class="fas fa-eye"></i> معاينة</a>
-                      <button class="btn btn-secondary btn-sm btn-icon" title="خصائص المظهر والتخصيص"><i class="fas fa-cog"></i></button>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- WoodMart Theme Card -->
-                <div style="border:1px solid var(--border-color); border-radius:var(--border-radius); overflow:hidden; background-color:var(--bg-secondary); display:flex; flex-direction:column; box-shadow:0 4px 6px rgba(0,0,0,0.05); transition:transform 0.2s; cursor:pointer;" class="theme-card" id="theme-card-woodmart">
-                  <!-- Visual Preview Mockup -->
-                  <div style="height:160px; background: linear-gradient(135deg, #0b1329 0%, #1c2541 100%); padding:20px; display:flex; flex-direction:column; justify-content:space-between; color:#ffffff; position:relative;">
-                    <div style="font-family:'Outfit', sans-serif; font-size:24px; font-weight:900; color:#ffcc00; border-bottom:1px solid rgba(255,255,255,0.2); padding-bottom:5px; text-transform:uppercase; letter-spacing:1px;">WOODMART MEGA ELECTRONICS</div>
-                    <div style="font-size:11px; opacity:0.9; line-height:1.4; color: #e0e0e0;">
-                      • شريط جانبي دائم للأقسام والفئات الإلكترونية<br>
-                      • شريط بحث عريض مع فلترة ذكية وتصاميم حديثة للمنتجات<br>
-                      • عرض تفاعلي لمستوى المخزون وتقييمات المراجعات النجمية
-                    </div>
-                    <span class="badge badge-success" id="badge-woodmart" style="position:absolute; top:15px; left:15px; background-color:#ffcc00; color:#0b1329; font-weight:700; display:none;">نشط حالياً</span>
-                  </div>
-                  
-                  <!-- Info Footer -->
-                  <div style="padding:16px; display:flex; flex-direction:column; gap:12px; flex-grow:1; justify-content:space-between;">
-                    <div>
-                      <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <h4 style="font-weight:700; font-size:15px; color:var(--text-primary);">ثيم وودمارت للإلكترونيات (WoodMart Theme)</h4>
-                        <span style="font-size:11px; color:#10b981; font-weight:700;">متاح مجاناً</span>
-                      </div>
-                      <p style="font-size:12px; color:var(--text-muted); margin-top:6px; line-height:1.4;">قالب التجارة الإلكترونية الأكثر مبيعاً للإلكترونيات والأجهزة المنزلية. يعتمد على تصميم رصين باللون الكحلي الداكن والأصفر الساطع، ومثالي لعرض مواصفات الأجهزة وتقييماتها ومخزونها.</p>
-                    </div>
-                    
-                    <div style="display:flex; gap:10px; border-top:1px solid var(--border-color); padding-top:12px; align-items:center;">
-                      <button class="btn btn-primary btn-sm" id="btn-activate-woodmart" style="flex:2;"><i class="fas fa-toggle-on"></i> تفعيل كافتراضي للمتجر</button>
-                      <a href="<?php echo htmlspecialchars($storefront_url . ($is_local ? '&' : '?') . 'preview=woodmart'); ?>" target="_blank" class="btn btn-secondary btn-sm" style="flex:1.2; display:flex; align-items:center; justify-content:center; gap:6px; text-decoration:none; height:36px; padding:0 8px; font-size:12px; font-weight:600;"><i class="fas fa-eye"></i> معاينة</a>
-                      <button class="btn btn-secondary btn-sm btn-icon" title="خصائص المظهر والتخصيص"><i class="fas fa-cog"></i></button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         <!-- SECTION 24: APPS MARKETPLACE -->
         <section id="apps-marketplace-section" class="view-section">

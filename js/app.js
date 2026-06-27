@@ -232,6 +232,8 @@ export function navigateToView(viewName) {
     targetView = 'inventory';
   } else if (viewName === 'import-products-update' || viewName === 'import-purchases' || viewName === 'import-sales') {
     targetView = 'import-products';
+  } else if (['settings-system', 'settings-warehouses', 'settings-payment-shipping', 'settings-themes'].includes(viewName)) {
+    targetView = 'settings-system';
   }
 
   // Update section visibility
@@ -263,6 +265,18 @@ export function navigateToView(viewName) {
       sec.classList.remove('active');
     }
   });
+
+  // Handle Shopify-style Settings Hub internal tab navigation
+  if (['settings-system', 'settings-warehouses', 'settings-payment-shipping', 'settings-themes'].includes(viewName)) {
+    let tabName = 'general';
+    if (viewName === 'settings-warehouses') tabName = 'locations';
+    else if (viewName === 'settings-payment-shipping') tabName = 'payments-shipping';
+    else if (viewName === 'settings-themes') tabName = 'themes';
+    
+    import('./settings.js').then(m => {
+      m.switchSettingsTab(tabName);
+    });
+  }
 
   // Handle programmatically clicking invoice tab buttons
   if (viewName === 'all-purchases') {

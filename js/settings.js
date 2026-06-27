@@ -16,6 +16,7 @@ export function initSettings() {
   setupAddWarehouse();
   initPaymentShipping();
   initThemesSettings();
+  initSettingsHub();
 }
 
 async function loadStoreSettings() {
@@ -510,4 +511,64 @@ export function initThemesSettings() {
   }
 
   updateUI();
+}
+
+export function initSettingsHub() {
+  const tabs = document.querySelectorAll('.settings-hub-tab-btn');
+  tabs.forEach(tab => {
+    if (!tab.dataset.listener) {
+      tab.dataset.listener = 'true';
+      tab.addEventListener('click', () => {
+        const targetTab = tab.getAttribute('data-settings-tab');
+        switchSettingsTab(targetTab);
+      });
+    }
+  });
+
+  const btnClose = document.getElementById('btn-close-settings-hub');
+  if (btnClose && !btnClose.dataset.listener) {
+    btnClose.dataset.listener = 'true';
+    btnClose.addEventListener('click', () => {
+      import('./app.js').then(m => m.navigateToView('dashboard'));
+    });
+  }
+}
+
+export function switchSettingsTab(tabName) {
+  // Update active tab buttons
+  const tabs = document.querySelectorAll('.settings-hub-tab-btn');
+  tabs.forEach(tab => {
+    if (tab.getAttribute('data-settings-tab') === tabName) {
+      tab.classList.add('active');
+    } else {
+      tab.classList.remove('active');
+    }
+  });
+
+  // Update active panels
+  const panels = document.querySelectorAll('.settings-hub-panel');
+  panels.forEach(panel => {
+    if (panel.id === `panel-settings-${tabName}`) {
+      panel.classList.add('active');
+    } else {
+      panel.classList.remove('active');
+    }
+  });
+  
+  // Keep main sidebar highlights aligned
+  const sidebarLinks = document.querySelectorAll('.submenu-item');
+  sidebarLinks.forEach(item => {
+    const itemTab = item.getAttribute('data-view');
+    let matched = false;
+    if (tabName === 'general' && itemTab === 'settings-system') matched = true;
+    else if (tabName === 'locations' && itemTab === 'settings-warehouses') matched = true;
+    else if (tabName === 'payments-shipping' && itemTab === 'settings-payment-shipping') matched = true;
+    else if (tabName === 'themes' && itemTab === 'settings-themes') matched = true;
+    
+    if (matched) {
+      item.classList.add('active');
+    } else {
+      item.classList.remove('active');
+    }
+  });
 }
